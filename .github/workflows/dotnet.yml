@@ -27,4 +27,7 @@ jobs:
     - name: Publish
       run: dotnet publish
       
-    
+    - uses: actions/upload-artifact@v2
+      with:
+       name: my-artifact
+       path: path/to/artifact/Vb6VirtualRegistry.exe
