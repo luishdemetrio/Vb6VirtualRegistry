@@ -24,13 +24,13 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Publish X86
-      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 --self-contained true
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 --self-contained true --output ./artifacts
       
     - name: Publish X64
-      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 --self-contained true
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 --self-contained true --output ./artifacts
       
     - name: Upload X86 Artifact
       uses: actions/upload-artifact@v2
       with:
        name: Vb6VirtualRegistry X86
-       path: Vb6VirtualRegistry/Vb6VirtualRegistry/Vb6VirtualRegistry/bin/Release/netcoreapp3.1/win-x86/publish/Vb6VirtualRegistry.exe
+       path: ./artifacts/Vb6VirtualRegistry.exe
