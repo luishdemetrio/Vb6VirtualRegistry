@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>x86</Platforms>
   </PropertyGroup>
 
@@ -15,21 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="offreg.x64.dll" />
-    <None Remove="offreg.x86.dll" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="offreg.x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="offreg.x86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="OffregLib" Version="0.7.2" />
+    <ProjectReference Include="..\..\OffregLib\OffregLib\OffregLib.csproj" />
   </ItemGroup>
 
 </Project>
