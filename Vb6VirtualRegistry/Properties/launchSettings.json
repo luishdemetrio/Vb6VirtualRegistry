@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Vb6VirtualRegistry": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\msix\\cobis\\files\\VFS\" "
+    }
+  }
+}
