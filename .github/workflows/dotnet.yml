@@ -21,15 +21,13 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release --no-restore
     
     - name: Publish X86
-      run: dotnet publish --configuration Release --runtime win-x86 --self-contained true
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 --self-contained true
       
     - name: Publish X64
-      run: dotnet publish --configuration Release --runtime win-x64 --self-contained true
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 --self-contained true
       
     - name: Upload X86 Artifact
       uses: actions/upload-artifact@v2
