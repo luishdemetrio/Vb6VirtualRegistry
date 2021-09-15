@@ -33,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
        name: Vb6VirtualRegistry X86
-       path: Vb6VirtualRegistry/Vb6VirtualRegistry/bin/Release/netcoreapp3.1/win-x86/publish/Vb6VirtualRegistry.exe
+       path: Vb6VirtualRegistry/Vb6VirtualRegistry/Vb6VirtualRegistry/bin/Release/netcoreapp3.1/win-x86/publish/Vb6VirtualRegistry.exe
