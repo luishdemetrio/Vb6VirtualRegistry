@@ -24,10 +24,14 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     
-    - name: Publish
-      run: dotnet publish
+    - name: Publish X86
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 --self-contained true
       
-    - uses: actions/upload-artifact@v2
+    - name: Publish X64
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 --self-contained true
+      
+    - name: Upload X86 Artifact
+      uses: actions/upload-artifact@v2
       with:
-       name: my-artifact
-       path: path/to/artifact/Vb6VirtualRegistry.exe
+       name: Vb6VirtualRegistry X86
+       path: Vb6VirtualRegistry/Vb6VirtualRegistry/bin/Release/netcoreapp3.1/win-x86/publish/Vb6VirtualRegistry.exe
