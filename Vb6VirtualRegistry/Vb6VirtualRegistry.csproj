@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OffregLib\OffregLib\OffregLib.csproj" />
+    <ProjectReference Include="..\OffregLib\OffregLib.csproj" />
   </ItemGroup>
 
 </Project>
