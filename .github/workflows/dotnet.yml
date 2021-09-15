@@ -24,10 +24,10 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Publish X86
-      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 --self-contained true --output ./artifacts
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
       
     - name: Publish X64
-      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 --self-contained true --output ./artifacts64
+      run: dotnet publish --configuration Release --framework netcoreapp3.1 --runtime win-x64 /p:PublishSingleFile=true --self-contained true --output ./artifacts64
       
     - name: Upload X86 Artifact
       uses: actions/upload-artifact@v2
