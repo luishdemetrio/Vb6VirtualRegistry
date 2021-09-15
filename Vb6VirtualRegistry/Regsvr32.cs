@@ -93,156 +93,160 @@ namespace Vb6VirtualRegistry
 
                         //figure out what guids, typekind, and names of the thing we're dealing with
                         IntPtr ipTypeAttr = IntPtr.Zero;
-                        typeInfo.GetTypeAttr(out ipTypeAttr);
-
-                        //unmarshal the pointer into a structure into something we can read
-                        var typeattr = (System.Runtime.InteropServices.ComTypes.TYPEATTR)
-                            Marshal.PtrToStructure(ipTypeAttr, typeof(System.Runtime.InteropServices.ComTypes.TYPEATTR));
-
-                        System.Runtime.InteropServices.ComTypes.TYPEKIND typeKind = typeattr.typekind;
-                        Guid typeId = typeattr.guid;
-
-                        //get the name of the type
-                        string strName, strDocString, strHelpFile;
-                        int dwHelpContext;
-                        typeLib.GetDocumentation(i, out strName, out strDocString, out dwHelpContext, out strHelpFile);
-
-
-
-                        using (var typeLibEntry = virtualClassesEntry.CreateSubKey("TypeLib"))
+                        try
                         {
-                            //read from:
-                            //HKEY_CLASSES_ROOT\TypeLib\{DFF71238-4555-42EA-AC07-679B142559B5}
 
-                            var localTypeLibKey = Registry.ClassesRoot.OpenSubKey($"TypeLib\\{tlbId.ToString("B").ToUpper()}");
 
-                            if (localTypeLibKey != null)
+                            typeInfo.GetTypeAttr(out ipTypeAttr);
+
+                            //unmarshal the pointer into a structure into something we can read
+                            var typeattr = (System.Runtime.InteropServices.ComTypes.TYPEATTR)
+                                Marshal.PtrToStructure(ipTypeAttr, typeof(System.Runtime.InteropServices.ComTypes.TYPEATTR));
+
+                            System.Runtime.InteropServices.ComTypes.TYPEKIND typeKind = typeattr.typekind;
+                            Guid typeId = typeattr.guid;
+
+                            //get the name of the type
+                            string strName, strDocString, strHelpFile;
+                            int dwHelpContext;
+                            typeLib.GetDocumentation(i, out strName, out strDocString, out dwHelpContext, out strHelpFile);
+
+
+
+                            using (var typeLibEntry = virtualClassesEntry.CreateSubKey("TypeLib"))
                             {
-                                //save at:
-                                //\REGISTRY\MACHINE\SOFTWARE\Classes\TypeLib\{DFF71238-4555-42EA-AC07-679B142559B5}
-                                Console.WriteLine($"TypeLib\\{tlbId.ToString("B").ToUpper()}");
-                                using (var typeLibEntrySubKey = typeLibEntry.CreateSubKey(tlbId.ToString("B").ToUpper()))
-                                {
-                                    ExportKey(localTypeLibKey, typeLibEntrySubKey);
-                                }
+                                //read from:
+                                //HKEY_CLASSES_ROOT\TypeLib\{DFF71238-4555-42EA-AC07-679B142559B5}
 
-                            }
-                        }
+                                var localTypeLibKey = Registry.ClassesRoot.OpenSubKey($"TypeLib\\{tlbId.ToString("B").ToUpper()}");
 
-                        if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_COCLASS)
-                        {
-                            //read from:
-                            //HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-
-                            using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
-                            using (var virtualCLSID = virtualWOW6432CLSIDKey.CreateSubKey("CLSID"))
-                            {
-                                var localWOW6432CLSIDKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
-
-                                if (localWOW6432CLSIDKey != null)
+                                if (localTypeLibKey != null)
                                 {
                                     //save at:
-                                    //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    Console.WriteLine($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
-                                    using (var virtualCLSIDEntrySubKey = virtualCLSID.CreateSubKey(typeId.ToString("B").ToUpper()))
+                                    //\REGISTRY\MACHINE\SOFTWARE\Classes\TypeLib\{DFF71238-4555-42EA-AC07-679B142559B5}
+                                    Console.WriteLine($"TypeLib\\{tlbId.ToString("B").ToUpper()}");
+                                    using (var typeLibEntrySubKey = typeLibEntry.CreateSubKey(tlbId.ToString("B").ToUpper()))
                                     {
-                                        ExportKey(localWOW6432CLSIDKey, virtualCLSIDEntrySubKey);
+                                        ExportKey(localTypeLibKey, typeLibEntrySubKey);
                                     }
 
-                                    //INSIDE DEFAULT KEY
-                                    //PRODID: HKEY_CLASSES_ROOT\ARRECINTEGRA.ClsT_ANU_USO_INDE
+                                }
+                            }
 
-                                    var localProgID = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}\\ProgID");
+                            if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_COCLASS)
+                            {
+                                //read from:
+                                //HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
 
-                                    if (localProgID != null)
+                                using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
+                                using (var virtualCLSID = virtualWOW6432CLSIDKey.CreateSubKey("CLSID"))
+                                {
+                                    var localWOW6432CLSIDKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
+
+                                    if (localWOW6432CLSIDKey != null)
                                     {
-                                        //saves at:
-                                        //REGISTRY\MACHINE\SOFTWARE\Classes\ARRECINTEGRA.ClsT_ANU_USO_INDE
-
-                                        var ProgIDValue = localProgID.GetValue("").ToString();
-
-                                        if (ProgIDValue != null)
+                                        //save at:
+                                        //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                        Console.WriteLine($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
+                                        using (var virtualCLSIDEntrySubKey = virtualCLSID.CreateSubKey(typeId.ToString("B").ToUpper()))
                                         {
-                                            using (var virtualProgID = virtualClassesEntry.CreateSubKey(ProgIDValue))
+                                            ExportKey(localWOW6432CLSIDKey, virtualCLSIDEntrySubKey);
+                                        }
+
+                                        //INSIDE DEFAULT KEY
+                                        //PRODID: HKEY_CLASSES_ROOT\ARRECINTEGRA.ClsT_ANU_USO_INDE
+
+                                        var localProgID = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}\\ProgID");
+
+                                        if (localProgID != null)
+                                        {
+                                            //saves at:
+                                            //REGISTRY\MACHINE\SOFTWARE\Classes\ARRECINTEGRA.ClsT_ANU_USO_INDE
+
+                                            var ProgIDValue = localProgID.GetValue("").ToString();
+
+                                            if (ProgIDValue != null)
                                             {
-
-                                                var localProgIDKey = Registry.ClassesRoot.OpenSubKey(ProgIDValue);
-
-                                                if (localProgIDKey != null)
+                                                using (var virtualProgID = virtualClassesEntry.CreateSubKey(ProgIDValue))
                                                 {
 
-                                                    ExportKey(localProgIDKey, virtualProgID);
+                                                    var localProgIDKey = Registry.ClassesRoot.OpenSubKey(ProgIDValue);
 
+                                                    if (localProgIDKey != null)
+                                                    {
+
+                                                        ExportKey(localProgIDKey, virtualProgID);
+
+                                                    }
                                                 }
                                             }
+
                                         }
 
                                     }
-
                                 }
                             }
-                        }
 
-                        else if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_INTERFACE)
-                        {
-
-                        }
-
-                        else if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_DISPATCH)
-                        {
-
-                            //HKCR\WOW6432Node\Interface\{26995163-87A0-4667-82B1-D304274EEE98}
-                            //HKCR\Interface\{26995163-87A0-4667-82B1-D304274EEE98}
-
-                            if (!virtualClassesEntry.SubkeyExist("WOW6432Node"))
+                            else if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_INTERFACE)
                             {
-                                using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
-                                { }
 
                             }
-                            using (var virtualWOW6432CLSIDKey = virtualClassesEntry.OpenSubKey("WOW6432Node"))
-                            using (var virtualInterface = virtualWOW6432CLSIDKey.CreateSubKey("Interface"))
-                            {
-                                var localInterfaceKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
 
-                                if (localInterfaceKey != null)
+                            else if (typeKind == System.Runtime.InteropServices.ComTypes.TYPEKIND.TKIND_DISPATCH)
+                            {
+
+                                //HKCR\WOW6432Node\Interface\{26995163-87A0-4667-82B1-D304274EEE98}
+                                //HKCR\Interface\{26995163-87A0-4667-82B1-D304274EEE98}
+
+                                if (!virtualClassesEntry.SubkeyExist("WOW6432Node"))
                                 {
-                                    //save at:
-                                    //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    Console.WriteLine($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
+                                    using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
+                                    { }
 
-                                    using (var virtualCLSIDEntrySubKey = virtualInterface.CreateSubKey(typeId.ToString("B").ToUpper()))
+                                }
+                                using (var virtualWOW6432CLSIDKey = virtualClassesEntry.OpenSubKey("WOW6432Node"))
+                                using (var virtualInterface = virtualWOW6432CLSIDKey.CreateSubKey("Interface"))
+                                {
+                                    var localInterfaceKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
+
+                                    if (localInterfaceKey != null)
                                     {
-                                        ExportKey(localInterfaceKey, virtualCLSIDEntrySubKey);
-                                    }
+                                        //save at:
+                                        //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                        Console.WriteLine($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
 
-                                    //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    using (var virtualInterfaceRoot = virtualClassesEntry.CreateSubKey("Interface"))
-                                    {
-                                        var localInterfaceRootKey = Registry.ClassesRoot.OpenSubKey($"Interface\\{typeId.ToString("B").ToUpper()}");
-
-                                        if (localInterfaceRootKey != null)
+                                        using (var virtualCLSIDEntrySubKey = virtualInterface.CreateSubKey(typeId.ToString("B").ToUpper()))
                                         {
-                                            //save at:
-                                            //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                            Console.WriteLine($"Classes\\Interface\\{typeId.ToString("B").ToUpper()}");
-                                            using (var virtualInterfaceRootEntrySubKey = virtualInterfaceRoot.CreateSubKey(typeId.ToString("B").ToUpper()))
-                                            {
-                                                ExportKey(localInterfaceRootKey, virtualInterfaceRootEntrySubKey);
-                                            }
+                                            ExportKey(localInterfaceKey, virtualCLSIDEntrySubKey);
+                                        }
 
+                                        //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                        using (var virtualInterfaceRoot = virtualClassesEntry.CreateSubKey("Interface"))
+                                        {
+                                            var localInterfaceRootKey = Registry.ClassesRoot.OpenSubKey($"Interface\\{typeId.ToString("B").ToUpper()}");
+
+                                            if (localInterfaceRootKey != null)
+                                            {
+                                                //save at:
+                                                //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                                Console.WriteLine($"Classes\\Interface\\{typeId.ToString("B").ToUpper()}");
+                                                using (var virtualInterfaceRootEntrySubKey = virtualInterfaceRoot.CreateSubKey(typeId.ToString("B").ToUpper()))
+                                                {
+                                                    ExportKey(localInterfaceRootKey, virtualInterfaceRootEntrySubKey);
+                                                }
+
+                                            }
                                         }
                                     }
                                 }
                             }
+
+
+
                         }
-
-
-
-                        else
+                        catch (Exception ex)
                         {
-
-
+                            Console.WriteLine($"System.Runtime.InteropServices.ComTypes.ITypeInfo.GetTypeAttr: {ex.Message}"); ;
                         }
                     }
                 }
