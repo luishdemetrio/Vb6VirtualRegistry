@@ -27,7 +27,7 @@ jobs:
     
     - name: Publish X86
       run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
-      
+                  
     - name: Publish X64
       run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x64 /p:PublishSingleFile=true --self-contained true --output ./artifacts64
       
@@ -42,6 +42,11 @@ jobs:
       with:
        name: Vb6VirtualRegistry64
        path: ./artifacts64/Vb6VirtualRegistry.exe
+       
+     # Archive the package
+    - name: Create release archive X64
+      run: Compress-Archive -Path ./artifacts64/Vb6VirtualRegistry.exe -DestinationPath ./artifacts64/Vb6VirtualRegistry64.zip 
+   
        
     - name: Create GitHub Release
       id: create_release
@@ -59,7 +64,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./Vb6VirtualRegistry64.zip
+        asset_path: ./artifacts64/Vb6VirtualRegistry64.zip
         asset_name: Vb6VirtualRegistry64.zip
         asset_content_type: application/zip
     
