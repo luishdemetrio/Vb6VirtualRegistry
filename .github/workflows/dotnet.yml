@@ -34,13 +34,13 @@ jobs:
     - name: Upload X86 Artifact
       uses: actions/upload-artifact@v2
       with:
-       name: Vb6VirtualRegistry X86
+       name: Vb6VirtualRegistry32
        path: ./artifacts/Vb6VirtualRegistry.exe
 
     - name: Upload X64 Artifact
       uses: actions/upload-artifact@v2
       with:
-       name: Vb6VirtualRegistry X64
+       name: Vb6VirtualRegistry64
        path: ./artifacts64/Vb6VirtualRegistry.exe
        
     - name: Create GitHub Release
@@ -59,8 +59,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./Vb6VirtualRegistry X64.zip
-        asset_name: Vb6VirtualRegistry X64.zip
+        asset_path: ./Vb6VirtualRegistry64.zip
+        asset_name: Vb6VirtualRegistry64.zip
         asset_content_type: application/zip
     
         
