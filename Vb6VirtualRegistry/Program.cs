@@ -19,7 +19,7 @@ namespace Vb6VirtualRegistry
 
            var files = Directory.GetFiles(args[0] , 
                                           "*.*", SearchOption.AllDirectories)
-                                 .Where(p => p.EndsWith("ocx") || p.EndsWith("dll")).ToList();
+                                 .Where(p => p.ToLower().EndsWith("ocx") || p.ToLower().EndsWith("dll")).ToList();
 
           
 
