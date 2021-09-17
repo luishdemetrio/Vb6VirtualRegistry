@@ -1,5 +1,5 @@
 $global:windowsSDKPath = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x86" 
-$global:certificatePassword = "AppConsult@FY22!"
+$global:certificatePassword = "AppConsult@PleaseChangeit!"
 
 function CreateCertificate($certificateName, $certificatePath)
 {
@@ -25,7 +25,7 @@ function CreateCertificate($certificateName, $certificatePath)
 
     Export-PfxCertificate -cert $cert.Thumbprint -FilePath "$certificatePath\$certificateName.pfx" -Password $pwd
     
-    Export-Certificate -Cert $cert -FilePath "$certificateName\$certificateName.cer"
+    Export-Certificate -Cert $cert -FilePath "$certificatePath\$certificateName.cer"
      
     Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\TrustedPeople" 
 

@@ -1,12 +1,14 @@
 
-. "msixFunctions.ps1"
+. "C:\github\Vb6VirtualRegistry\Scripts\msixFunctions.ps1"
 
-Unpack-MSIX "C:\Banco Ciudad\Cobis_1.0.0.0_x86__eamkjkkbw7e1a.msix" "c:\msix\cobis\files"
+# CreateCertificate "Vb6VirtualRegistry" "C:\github\Vb6VirtualRegistry\Scripts\Sample"
 
-C:\msix\vb6registrytool\Vb6VirtualRegistry.exe C:\msix\cobis\files\VFS C:\msix\cobis\files\registry.dat
+# Unpack-MSIX "C:\github\Vb6VirtualRegistry\Scripts\Sample\sample.msix" C:\github\Vb6VirtualRegistry\Scripts\Sample\msix
 
-Pack-MSIX "c:\msix\cobis\files" "C:\MSIX\cobis\CobisNavegador.msix"
+# C:\github\vb6registrytool\Vb6VirtualRegistry.exe C:\github\Vb6VirtualRegistry\Scripts\Sample\msix C:\github\Vb6VirtualRegistry\Scripts\Sample\msix\registry.dat
 
-Sign-MSIX "C:\MSIX\cobis\CobisNavegador.msix" "C:\Users\luisdem\OneDrive - Microsoft\PowerShell\AppConsult.pfx"
+Pack-MSIX C:\github\Vb6VirtualRegistry\Scripts\Sample\msix C:\github\Vb6VirtualRegistry\Scripts\Sample.msix
 
-Add-AppxPackage "C:\MSIX\cobis\CobisNavegador.msix"
+Sign-MSIX C:\github\Vb6VirtualRegistry\Scripts\Sample.msix "C:\github\Vb6VirtualRegistry\Scripts\Sample\Vb6VirtualRegistry.pfx"
+
+Add-AppxPackage C:\github\Vb6VirtualRegistry\Scripts\Sample.msix
