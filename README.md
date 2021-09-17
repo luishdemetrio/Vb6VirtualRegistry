@@ -22,6 +22,3 @@ As the original [OffregLib](https://github.com/LordMike/OffregLib "OffregLib rep
 
 More about the official OffregLib here: http://nuget.org/packages/OffregLib
 
-
-
-
