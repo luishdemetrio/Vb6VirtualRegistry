@@ -51,15 +51,15 @@ function Pack-MSIX($unpackedPath, $newMsixFile)
 
     Remove-Item $newMsixFile -ErrorAction Ignore
 
-    Remove-Item $unpackedPath\priconfig.xmlÂ -ErrorAction Ignore
+    Remove-Item $unpackedPath\priconfig.xml -ErrorAction Ignore
     
-    .\MakePri.exeÂ createconfigÂ /cfÂ $unpackedPath\priconfig.xmlÂ /dqÂ en-USÂ /pvÂ 10.0.0
+    .\MakePri.exe createconfig /cf $unpackedPath\priconfig.xml /dq en-US /pv 10.0.0
 
     Remove-Item $unpackedPath\resources.pri -ErrorAction Ignore
 
-    .\MakePri.exe NewÂ -ProjectRootÂ $unpackedPathÂ -ConfigXml $unpackedPath\priconfig.xmlÂ `
-                      -OutputFileÂ $unpackedPath\resources.priÂ `
-                      -VerboseÂ -Overwrite
+    .\MakePri.exe New -ProjectRoot $unpackedPath -ConfigXml $unpackedPath\priconfig.xml `
+                      -OutputFile $unpackedPath\resources.pri `
+                      -Verbose -Overwrite
 
     #comando para reempaquetar
     .\MakeAppx.exe pack /d $unpackedPath /p $newMsixFile /l
