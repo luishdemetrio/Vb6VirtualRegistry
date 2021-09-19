@@ -181,12 +181,12 @@ Follows the result files:
 
 Now we can install our package application by double-clicking on the myvb6app.msix:
 
-![New files](Images/msixInstallUI.png)
+![MSIX install UI](Images/msixInstallUI.png)
 
 
 Follows the application running as MSIX:
 
-![New files](Images/vb6msix.png)
+![VB6 running as MSIX](Images/vb6MSIX.png)
 
 
 Once we are running as MSIX, we don't need admin privileges to install the application, once the application's components are now inside the virtual registry of the package.
