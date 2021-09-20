@@ -9,15 +9,28 @@ namespace Vb6VirtualRegistry
         static void Main(string[] args)
         {
 
+            Console.WriteLine("VB6 Registry Tool");
+            Console.WriteLine("Virtual Registry tool utility for Visual Basic 6.0 applications");
+            Console.WriteLine("https://github.com/luishdemetrio/Vb6VirtualRegistry");
+            
+            
+
             if (args.Length == 0)
             {
+                Console.WriteLine("This project helps to automate the Visual Basic 6.0 packaging by generating a virtual registry file to be added on the VB6 MSIX package with the components (OCXs and DLLs) used by the VB6 application.");
 
-                Console.WriteLine("Example: vb6virtualregistry c:\\msix\\files  c:\\temp\\registry.dat");
+                Console.WriteLine("\nUsage:");
+
+                Console.WriteLine("    vb6registrytool.exe [componentsPath] [destinationPath]:");
+
+                Console.WriteLine("\nSample:");
+                Console.WriteLine("    vb6registrytool.exe c:\\VB6\\dlls c:\\vb6\\registry.dat");
+
                 return;
-
             }
+            Console.WriteLine("\n");
 
-           var files = Directory.GetFiles(args[0] , 
+            var files = Directory.GetFiles(args[0] , 
                                           "*.*", SearchOption.AllDirectories)
                                  .Where(p => p.ToLower().EndsWith("ocx") || p.ToLower().EndsWith("dll")).ToList();
 
