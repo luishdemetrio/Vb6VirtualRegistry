@@ -125,12 +125,12 @@ Here is the application manifest content:
 
 ```
 
-If we try to package and install the Project1 to the MSIX format, the application will throw the following an exception during the initialization telling that the **RICHTX32.OCX is not registered**:
+If we try to package and install the Project1 to the MSIX format, the application will throw the following an exception during the initialization because the **RICHTX32.OCX is not registered**:
 
 ![Missing OCX](Images/notRegistered.png)
 
 
-This happens, because the RICHTX32.OCX is not registered in the machine and, as we are using MSIX, we want to deploy everything inside the package, even the registry keys. Therefore, as next step, it is necessary to create the **virtual registry** ([registry.dat](https://docs.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-behind-the-scenes) file) which serves as the logical equivalent of HKLM\Software in the real registry. At runtime, this virtual registry merges the contents of this hive into the native system hive to provide a singular view of both.
+As we want to deploy everything inside the MSIX package (files and registry keys), we need to create the **virtual registry** ([registry.dat](https://docs.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-behind-the-scenes) file) which serves as the logical equivalent of HKLM\Software in the real registry. At runtime, this virtual registry merges the contents of this hive into the native system hive to provide a singular view of both.
 
 #### VB6VirtualRegistry.
 
@@ -167,7 +167,7 @@ CreateCertificate "Vb6VirtualRegistry" "C:\github\Vb6VirtualRegistry\Scripts\Sam
 # it is used to package the folder
 Pack-MSIX C:\github\Vb6VirtualRegistry\Sample\unpackaged C:\github\Vb6VirtualRegistry\Sample\myvb6app.msix
 
-# it signs the application with our test certification
+# it signs the application with our test certificate
 Sign-MSIX C:\github\Vb6VirtualRegistry\Sample\myvb6app.msix "C:\github\Vb6VirtualRegistry\Sample\Vb6VirtualRegistry.pfx"
 
 ```
