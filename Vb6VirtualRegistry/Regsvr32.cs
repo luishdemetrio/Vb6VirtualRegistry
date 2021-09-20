@@ -24,13 +24,15 @@ namespace Vb6VirtualRegistry
 
             _components = pComponents;
 
-
             RegistryComponentsToRealRegistry();
 
             ParseTypeLib(pVirtualRegistryPath);
 
             return r;
         }
+
+       
+        
 
         private void RegistryComponentsToRealRegistry()
         {
@@ -278,6 +280,8 @@ namespace Vb6VirtualRegistry
                                                                 "System",
                                                                 "SystemX86",
                                                                 "SystemX64",
+                                                                "SYSTEM~1",
+                                                                "SYSTEM~2",
                                                                 "Windows"
                                                              };
 
@@ -300,6 +304,11 @@ namespace Vb6VirtualRegistry
             //C:\MSIX\TAP\TJRJ\extracted\VFS\ProgramFilesX64\PJERJ\Componentes\ArrecadacaoIntegrada.dll
             //by
             //[{ProgramFilesX64}]\PJERJ\Componentes\ArrecadacaoIntegrada.dll
+
+            //it is a bug that can occur (c:\ciudad\files3\VFS\SYSTEM~2\Threed32.ocx)
+            pValue = pValue.Replace("SYSTEM~1", "SystemX86").Replace("SYSTEM~2", "SystemX86");
+            pDirectory = pDirectory.Replace("SYSTEM~1", "SystemX86").Replace("SYSTEM~2", "SystemX86");
+
 
             var index = pValue.IndexOf($"{pDirectory}");
 

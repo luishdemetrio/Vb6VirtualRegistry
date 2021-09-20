@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\msix\\cobis\\files\\VFS\" "
+      "commandLineArgs": "\"C:\\Users\\luisdem\\Desktop\\fe_Atc\\VFS\\SystemX86\" "
     }
   }
 }
