@@ -10,7 +10,7 @@ CreateCertificate "Vb6VirtualRegistry" "C:\github\Vb6VirtualRegistry\Sample"
 
 # Unpack-MSIX "C:\github\Vb6VirtualRegistry\Scripts\Sample\sample.msix" C:\github\Vb6VirtualRegistry\Scripts\Sample\msix
 
-# C:\github\vb6registrytool\Vb6VirtualRegistry.exe C:\github\Vb6VirtualRegistry\Scripts\Sample\msix C:\github\Vb6VirtualRegistry\Scripts\Sample\msix\registry.dat
+# C:\github\vb6registrytool\Vb6VirtualRegistry.exe regsvr32 C:\github\Vb6VirtualRegistry\Scripts\Sample\msix C:\github\Vb6VirtualRegistry\Scripts\Sample\msix\registry.dat
 
 
 # it is used to package the folder
