@@ -6,10 +6,11 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.Runtime.InteropServices.ComTypes;
 using System.IO;
+using System.Linq;
 
 namespace Vb6VirtualRegistry
 {
-    public class Regsvr32
+    public class Regsvr32 : IPackageAction
     {
 
         [DllImport("oleaut32.dll", PreserveSig = false)]
@@ -18,34 +19,49 @@ namespace Vb6VirtualRegistry
 
         private List<string> _components;
 
-        public bool Run(List<string> pComponents, string pVirtualRegistryPath)
+        public void Run(string pParameter, string pVirtualRegistryPath)
         {
-            bool r = false;
-
-            _components = pComponents;
+            
+            _components = GetComponents(pParameter);
 
             RegistryComponentsToRealRegistry();
 
             ParseTypeLib(pVirtualRegistryPath);
 
-            return r;
+            
         }
 
-       
+       private List<string> GetComponents(string pPath)
+        {
+
+
+            return Directory.GetFiles(pPath,
+                                          "*.*", SearchOption.AllDirectories)
+                                 .Where(p => p.ToLower().EndsWith("ocx") || p.ToLower().EndsWith("dll")).ToList();
+        }
         
 
         private void RegistryComponentsToRealRegistry()
         {
-            foreach (string item in _components)
+            foreach (string item in _components.AsParallel())
             {
-                using (var process = new Process())
+                try
                 {
-                    process.StartInfo.FileName = "regsvr32.exe";
-                    process.StartInfo.Arguments = $"/s {item}";
-                    process.Start();
-                    Console.WriteLine($"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
-                    process.WaitForExit();
+                    using (var process = new Process())
+                    {
+                        process.StartInfo.FileName = "regsvr32.exe";
+                        process.StartInfo.Arguments = $"/s {item}";
+                        process.Start();
+                        Console.WriteLine($"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
+                        process.WaitForExit();
+                    }
                 }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine($"RegistryComponentsToRealRegistry {ex.Message}");
+                }
+                
 
             }
         }
@@ -301,9 +317,9 @@ namespace Vb6VirtualRegistry
             string msixValue = String.Empty;
 
             //replace
-            //C:\MSIX\TAP\TJRJ\extracted\VFS\ProgramFilesX64\PJERJ\Componentes\ArrecadacaoIntegrada.dll
+            //C:\MSIX\TAP\extracted\VFS\ProgramFilesX64\Componentes\Integrada.dll
             //by
-            //[{ProgramFilesX64}]\PJERJ\Componentes\ArrecadacaoIntegrada.dll
+            //[{ProgramFilesX64}]\Componentes\Integrada.dll
 
             //it is a bug that can occur (c:\ciudad\files3\VFS\SYSTEM~2\Threed32.ocx)
             pValue = pValue.Replace("SYSTEM~1", "SystemX86").Replace("SYSTEM~2", "SystemX86");
@@ -313,7 +329,7 @@ namespace Vb6VirtualRegistry
             var index = pValue.IndexOf($"{pDirectory}");
 
             msixValue = pValue.Substring(index).Replace($"{pDirectory}", $"[{{{pDirectory}}}]");
-
+            Console.WriteLine($"Replaced {pValue} by {msixValue}");
             return msixValue;
 
         }
