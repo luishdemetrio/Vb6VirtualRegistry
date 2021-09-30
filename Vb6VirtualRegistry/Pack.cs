@@ -53,8 +53,6 @@ namespace Vb6VirtualRegistry
 
 
 
-
-
             }
             catch (Exception ex)
             {
@@ -69,7 +67,7 @@ namespace Vb6VirtualRegistry
             {
                 using (var makeappx = new Process())
                 {
-                    var fileName= "SDK\\makeappx.exe";
+                    var fileName= $"{GetCurrentDirectory()}\\SDK\\makeappx.exe";
 
                     var args = $"pack /d {pUnpackagedPath} /p {pDestinationMsixPath} /l";
 
@@ -142,7 +140,7 @@ namespace Vb6VirtualRegistry
 
                     Console.WriteLine(makepriFile + makepriArgs);
                     makepri.StartInfo.FileName = makepriFile;
-                    makepri.StartInfo.Arguments = makepriArgs;
+                    makepri.StartInfo.Arguments = @"new /pr """ + pUnpackagedPath + @""" /cf """ + pUnpackagedPath + @"\priconfig.xml"" /of """ + pUnpackagedPath + @"\resources.pri"" /v /o"  ;
 
                     makepri.Start();
 
