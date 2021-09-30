@@ -8,8 +8,8 @@ namespace Vb6VirtualRegistry
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("VB6 Registry Tool");
+            Console.WriteLine("\n");
+            Console.WriteLine("MSIXTool - VB6 Registry Tool");
             Console.WriteLine("Virtual Registry tool utility for Visual Basic 6.0 applications");
             Console.WriteLine("https://github.com/luishdemetrio/Vb6VirtualRegistry");
 
@@ -21,15 +21,26 @@ namespace Vb6VirtualRegistry
                 Console.WriteLine("This project helps to automate the Visual Basic 6.0 packaging by generating a virtual registry file to be added on the VB6 MSIX package with the components (OCXs and DLLs) used by the VB6 application.");
 
                 Console.WriteLine("\nUsage:");
-                Console.WriteLine("    vb6registrytool.exe [action] [componentsPath] [destinationPath]:");
+                Console.WriteLine("    vb6registrytool.exe [action] [args] [args]:");
 
                 Console.WriteLine("\nActions:");
+                Console.WriteLine("\n    pack");
+                Console.WriteLine("\n    unpack");
                 Console.WriteLine("\n    regsvr32");
                 Console.WriteLine("\n    regasm");
+                
 
-                Console.WriteLine("\nSample:");
-                Console.WriteLine("    vb6registrytool.exe regsvr32 c:\\VB6\\dlls c:\\vb6\\registry.dat");
-                Console.WriteLine("    vb6registrytool.exe regasm c:\\VB6\\dlls\\CrystalReport.ocx c:\\vb6\\registry.dat");
+                Console.WriteLine("\nCreate virtual registry for VB6 components:");
+                Console.WriteLine("    vb6registrytool.exe regsvr32 c:\\MyApp\\unpackagedFiles c:\\MyApp\\unpackagedFiles\\registry.dat");
+
+                Console.WriteLine("\nCreate virtual registry for .NET components:");
+                Console.WriteLine("    vb6registrytool.exe regasm c:\\MyApp\\unpackagedFiles\\VFS\\SystemX86\\CrystalReport.ocx c:\\vb6\\registry.dat");
+
+                Console.WriteLine("\nPackage the folder");
+                Console.WriteLine("    vb6registrytool.exe pack c:\\MyApp\\unpackagedFiles c:\\MyApp\\myapp.msix");
+
+                Console.WriteLine("\nUnpack a MSIX file");
+                Console.WriteLine("    vb6registrytool.exe unpack c:\\MyApp\\myapp.msix c:\\MyApp\\unpackagedFiles");
 
                 return;
             } else if (args.Length == 3)
