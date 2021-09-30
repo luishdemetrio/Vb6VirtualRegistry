@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "pack C:\\msix\\AdmCred C:\\msix\\AdmCred.msix"
+      "commandLineArgs": "unpack C:\\msix\\AdmCred.msix C:\\msix\\AdmCred2"
     }
   }
 }
