@@ -36,6 +36,11 @@ namespace Vb6VirtualRegistry
                     returnMessage = "Registry file successfuly created.";
                     break;
 
+                case "pack":
+                    package = new Pack();
+                    returnMessage = "Application successfuly packaged.";
+                    break;
+
             }
 
             if (package != null)

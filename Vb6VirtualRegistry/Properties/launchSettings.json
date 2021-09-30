@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "regasm \"C:\\Users\\luisdem\\OneDrive - Microsoft\\AppConsult\\FY22\\Banco Ciudad\\AdmCred\\VFS\\AppVPackageDrive\\Cobis\\DLLS\\CrystalReport.ocx\" \"C:\\msix\\admin\\registry.dat\""
+      "commandLineArgs": "pack C:\\msix\\AdmCred C:\\msix\\AdmCred.msix"
     }
   }
 }
