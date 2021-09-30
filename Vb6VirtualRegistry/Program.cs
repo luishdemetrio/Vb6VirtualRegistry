@@ -14,7 +14,7 @@ namespace Vb6VirtualRegistry
             Console.WriteLine("https://github.com/luishdemetrio/Vb6VirtualRegistry");
 
 
-            string virtualRegistryFile = string.Empty;
+            string arg3 = string.Empty;
 
             if (args.Length < 2)
             {
@@ -34,10 +34,10 @@ namespace Vb6VirtualRegistry
                 return;
             } else if (args.Length == 3)
             {
-                virtualRegistryFile = args[2];
+                arg3 = args[2];
             }
         
-            PackageFactory.Run(args[0], args[1], virtualRegistryFile) ;
+            PackageFactory.Run(args[0], args[1], arg3) ;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Vb6VirtualRegistry
 {
-    public class Regsvr32 : IPackageAction
+    public sealed class Regsvr32 : IPackageAction
     {
 
         [DllImport("oleaut32.dll", PreserveSig = false)]
@@ -61,6 +61,7 @@ namespace Vb6VirtualRegistry
 
                     Console.WriteLine($"RegistryComponentsToRealRegistry {ex.Message}");
                 }
+
                 
 
             }

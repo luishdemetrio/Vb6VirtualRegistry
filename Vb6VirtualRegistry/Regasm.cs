@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Vb6VirtualRegistry
 {
-    public class Regasm : IPackageAction
+    public sealed class Regasm : IPackageAction
     {
         string _virtualRegistryPath;
         string _temporaryVirtualRegistryKeyName = $"MSIXTool_{Guid.NewGuid()}";
