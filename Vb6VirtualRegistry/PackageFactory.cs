@@ -41,6 +41,11 @@ namespace Vb6VirtualRegistry
                     returnMessage = "Application successfuly packaged.";
                     break;
 
+                case "unpack":
+                    package = new Unpack();
+                    returnMessage = "Packaged successfuly extracted.";
+                    break;
+
             }
 
             if (package != null)
