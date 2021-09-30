@@ -46,6 +46,11 @@ namespace Vb6VirtualRegistry
                     returnMessage = "Packaged successfuly extracted.";
                     break;
 
+                case "sign":
+                    package = new Sign();
+                    returnMessage = "Packaged successfuly signed.";
+                    break;
+
             }
 
             if (package != null)

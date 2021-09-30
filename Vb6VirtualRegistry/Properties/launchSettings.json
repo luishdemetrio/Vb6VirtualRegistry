@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "unpack C:\\msix\\AdmCred.msix C:\\msix\\AdmCred2"
+      "commandLineArgs": "sign \"C:\\msix\\AdmCred.msix\" \"C:\\Users\\luisdem\\OneDrive - Microsoft\\PowerShell\\AppConsult.pfx\""
     }
   }
 }
