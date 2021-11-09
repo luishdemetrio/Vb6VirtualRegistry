@@ -14,20 +14,13 @@ jobs:
     runs-on: windows-latest
     steps:
   
-    - name: Find and Replace
-    # You may pin to the exact commit or the version.
-    # uses: jacobtomlinson/gha-find-replace@f485fdc3f67a6d87ae6e3d11e41f648c26d7aee3
-      uses: jacobtomlinson/gha-find-replace@2.0.0
+   
+    - name: Find and Replace Action
+      uses: nguyenvanuyn96/str-find-and-replace-action@0.0.5
       with:
-        # A glob of files to include in our find and replace
         include: "Program.cs"
-      
-        # The regular expression (or fixed string) we want to replace
-        find: "$Version" 
-        # The new string to replace with
-        replace: ${{ github.run_number}}
-        
-    
+        find: "$Version"
+        replace: ${{ github.run_number}}         
         
     - uses: actions/checkout@v2
     - name: Setup .NET Core
