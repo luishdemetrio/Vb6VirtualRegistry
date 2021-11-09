@@ -23,7 +23,7 @@ jobs:
   
     - name: Replace version string
   
-      uses: frabert/replace-string-action@v2.0
+      uses: bluwy/substitute-string-action@v1
       with:
         _input-file: 'Program.cs'
         
