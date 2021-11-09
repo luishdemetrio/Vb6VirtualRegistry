@@ -19,8 +19,8 @@ jobs:
       uses: bluwy/substitute-string-action@v1
       with:
         _input-file: './Program.cs'
-        _format-key: '%%__version__%%'
-        __version__: ${{ github.ref }}
+        _format-key: '%%version%%'
+        version: ${{ github.ref }}
         
     - uses: actions/checkout@v2
     - name: Setup .NET Core
