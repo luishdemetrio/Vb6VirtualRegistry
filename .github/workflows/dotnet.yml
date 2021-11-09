@@ -14,17 +14,20 @@ jobs:
     runs-on: windows-latest
     steps:
   
-    - name: Replace Version
-      # You may pin to the exact commit or the version.
-      # uses: datamonsters/replace-action@54f8e7be24769a843c1c60a0cc9fa3c1aaa906ca
-      uses: datamonsters/replace-action@v2
+    - name: Find and Replace
+    # You may pin to the exact commit or the version.
+    # uses: jacobtomlinson/gha-find-replace@f485fdc3f67a6d87ae6e3d11e41f648c26d7aee3
+      uses: jacobtomlinson/gha-find-replace@2.0.0
       with:
-        # Files, comma-separated. Supposed PLACEHOLDER in them
-        files: "Program.cs"
-        # Comma-separated pairs PLACEHOLDER=value
-        replacements: "$Version=${{ github.run_number }}"   
+        # A glob of files to include in our find and replace
+        include: "Program.cs"
+      
+        # The regular expression (or fixed string) we want to replace
+        find: "$Version" 
+        # The new string to replace with
+        replace: ${{ github.run_number}}
+        
     
-   
         
     - uses: actions/checkout@v2
     - name: Setup .NET Core
