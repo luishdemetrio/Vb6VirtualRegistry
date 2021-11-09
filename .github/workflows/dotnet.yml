@@ -25,7 +25,7 @@ jobs:
   
       uses: bluwy/substitute-string-action@v1
       with:
-        _input-file: 'Program.cs'
+        _input-file: './Program.cs'
         
         # The input string
         string: "__version__"
