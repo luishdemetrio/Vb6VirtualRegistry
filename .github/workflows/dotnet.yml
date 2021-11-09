@@ -13,14 +13,6 @@ jobs:
     name: Build and Deploy    
     runs-on: windows-latest
     steps:
-  
-   
-    - name: Find and Replace Action
-      uses: nguyenvanuyn96/str-find-and-replace-action@0.0.5
-      with:
-        include: "Program.cs"
-        find: "$Version"
-        replace: ${{ github.run_number}}         
         
     - uses: actions/checkout@v2
     - name: Setup .NET Core
