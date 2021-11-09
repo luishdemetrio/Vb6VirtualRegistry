@@ -26,11 +26,8 @@ jobs:
       uses: bluwy/substitute-string-action@v1
       with:
         _input-file: './Program.cs'
-        
-        # The input string
-        string: "__version__"
-        # What to replace with
-        replace-with: ${{github.run_number}}
+        _format-key: '__version__'
+        version: ${{ github.ref }}
         
     
     - name: Restore dependencies
