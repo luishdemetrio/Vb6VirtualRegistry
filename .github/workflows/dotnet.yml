@@ -20,17 +20,18 @@ jobs:
       with:
         dotnet-version: 3.1
     
-    - name: Replace Value
-      # You may pin to the exact commit or the version.
-      # uses: visiosto/replace-value@1e74d6b57e29503b4789c72b9053480824e12a9b
-      uses: visiosto/replace-value@v1.0.0
+  
+    - name: Replace version string
+  
+      uses: frabert/replace-string-action@v2.0
       with:
-        # The file where the content to replace is.
-        file: "Program.cs"
-        # The value that will be replaced.
-        replaced: "__version__"
-        # The value that the original value is replaced with.
-        value: ${{github.run_number}}
+        _input-file: 'Program.cs'
+        
+        # The input string
+        string: "__version__"
+        # What to replace with
+        replace-with: ${{github.run_number}}
+        
     
     - name: Restore dependencies
       run: dotnet restore
