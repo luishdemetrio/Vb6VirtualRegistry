@@ -26,7 +26,7 @@ jobs:
       uses: visiosto/replace-value@v1.0.0
       with:
         # The file where the content to replace is.
-        file: Program.cs
+        file: "Program.cs"
         # The value that will be replaced.
         replaced: "__version__"
         # The value that the original value is replaced with.
