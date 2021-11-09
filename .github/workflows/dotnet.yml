@@ -22,7 +22,7 @@ jobs:
         # Files, comma-separated. Supposed PLACEHOLDER in them
         files: "Program.cs"
         # Comma-separated pairs PLACEHOLDER=value
-        replacements: "__version__, ${{ github.run_number }}"   
+        replacements: "$Version=${{ github.run_number }}"   
     
    
         
