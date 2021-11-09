@@ -14,13 +14,17 @@ jobs:
     runs-on: windows-latest
     steps:
   
-  
-    - name: Replace version string
-      uses: bluwy/substitute-string-action@v1
+    - name: Replace Version
+      # You may pin to the exact commit or the version.
+      # uses: datamonsters/replace-action@54f8e7be24769a843c1c60a0cc9fa3c1aaa906ca
+      uses: datamonsters/replace-action@v2
       with:
-        _input-file: './Program.cs'
-        _format-key: '%%version%%'
-        version: ${{ github.ref }}
+        # Files, comma-separated. Supposed PLACEHOLDER in them
+        files: "Program.cs"
+        # Comma-separated pairs PLACEHOLDER=value
+        replacements: "__version__, ${{ github.run_number }}"   
+    
+   
         
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -29,8 +33,7 @@ jobs:
         dotnet-version: 3.1
     
   
-        
-    
+     
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
