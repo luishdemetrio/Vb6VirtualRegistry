@@ -4,4 +4,12 @@ on: pull_request_review
 jobs:
   labelWhenApproved:
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Label approved pull requests
+        uses: abinoda/label-when-approved-action@1.0.5
+        env:
+          APPROVALS: "1"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ADD_LABEL: "approved"
 
