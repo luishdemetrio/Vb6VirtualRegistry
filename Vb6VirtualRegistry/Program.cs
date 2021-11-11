@@ -8,8 +8,7 @@ namespace Vb6VirtualRegistry
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\n");
-            Console.WriteLine("MSIXTool - VB6 Registry Tool - Version: $Version");
+            Console.WriteLine("MSIXTool - VB6 Registry Tool");
             Console.WriteLine("Virtual Registry tool utility for Visual Basic 6.0 applications");
             Console.WriteLine("https://github.com/luishdemetrio/Vb6VirtualRegistry");
 
