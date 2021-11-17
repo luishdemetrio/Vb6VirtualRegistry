@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "sign \"C:\\msix\\AdmCred.msix\" \"C:\\Users\\luisdem\\OneDrive - Microsoft\\PowerShell\\AppConsult.pfx\""
+      "commandLineArgs": "sign \"C:\\msix\\IBI\\IbiPlus_1.0.1.0_x64__eamkjkkbw7e1a.msix\" \"C:\\Users\\luisdem\\OneDrive - Microsoft\\PowerShell\\AppConsult.pfx\" "
     }
   }
 }
