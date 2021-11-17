@@ -43,7 +43,7 @@ namespace Vb6VirtualRegistry
                 Console.WriteLine("    Vb6VirtualRegistry.exe unpack c:\\MyApp\\myapp.msix c:\\MyApp\\unpackagedFiles");
 
                 Console.WriteLine("\nSign a MSIX file");
-                Console.WriteLine("    Vb6VirtualRegistry.exe sign c:\\MyApp\\mycertificate.pfx c:\\MyApp\\myapp.msix ");
+                Console.WriteLine("    Vb6VirtualRegistry.exe sign c:\\MyApp\\myapp.msix c:\\MyApp\\mycertificate.pfx");
 
                 return;
             } else if (args.Length == 3)

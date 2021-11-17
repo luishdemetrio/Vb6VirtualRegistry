@@ -53,11 +53,13 @@ namespace Vb6VirtualRegistry
 
         private void SignPackage(string pMSIXPackage, string pCertificatePath)
         {
+
+            var certificatePassword = String.Empty;
             try
             {
                 Console.WriteLine("Enter the certificate password: ");
 
-                var certificatePassword = GetCertificatePassword();
+                certificatePassword = GetCertificatePassword();
 
                 if (string.IsNullOrEmpty(certificatePassword))
                 {
@@ -85,7 +87,7 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message.Replace(GetCertificatePassword, "Secret"));
+                Console.WriteLine(ex.Message.Replace(certificatePassword, "Secret"));
             }
         }
 
