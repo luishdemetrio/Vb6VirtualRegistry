@@ -27,6 +27,7 @@ namespace Vb6VirtualRegistry
                 Console.WriteLine("\n    unpack");
                 Console.WriteLine("\n    regsvr32");
                 Console.WriteLine("\n    regasm");
+                Console.WriteLine("\n    sign");
 
 
                 Console.WriteLine("\nCreate virtual registry for VB6 components:");
@@ -40,6 +41,9 @@ namespace Vb6VirtualRegistry
 
                 Console.WriteLine("\nUnpack a MSIX file");
                 Console.WriteLine("    Vb6VirtualRegistry.exe unpack c:\\MyApp\\myapp.msix c:\\MyApp\\unpackagedFiles");
+
+                Console.WriteLine("\nSign a MSIX file");
+                Console.WriteLine("    Vb6VirtualRegistry.exe sign c:\\MyApp\\mycertificate.pfx c:\\MyApp\\myapp.msix ");
 
                 return;
             } else if (args.Length == 3)

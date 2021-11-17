@@ -12,16 +12,11 @@ namespace Vb6VirtualRegistry
             try
             {
 
-               
-
                 SignPackage(pMSIXPackage, pCertificatePath);
-
-
 
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
             }
         }
@@ -90,7 +85,7 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message.Replace(GetCertificatePassword, "Secret"));
             }
         }
 
