@@ -29,6 +29,7 @@ jobs:
       - name: Publish X86
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
 
+
   upload:
     needs: publish
     runs-on: windows-latest
