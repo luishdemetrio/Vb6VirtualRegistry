@@ -22,17 +22,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
   
-  publish:
-    needs: build
-    runs-on: windows-latest
-    steps:
       - name: Publish X86
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
 
-  upload:
-    needs: publish
-    runs-on: windows-latest
-    steps:    
       - name: Upload X86 Artifact
         uses: actions/upload-artifact@v2
         with:
