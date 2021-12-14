@@ -42,6 +42,10 @@ The **Assets** folder contains the application images like default tile and logo
 
 ![Assets folder](Images/assetsfolder.png)
 
+You can easily generate the images for you application through the [PWA Builder Image Generator](https://www.pwabuilder.com/imagegenerator)
+
+![PWA Builder Image Generator](Images/pwabuilder.png)
+
 The application and its dependencies can be publish in any folder inside the package. It is possible to use the special folder called **VFS** that contains the corresponding folders for the Windows' well-known folders (System32, Program Files, etc). This is great for applications that expects files in the original path outside the package.
 
 For the Project1, the VFS contains the folders ProgramFilesX86 and SystemX86.
@@ -137,7 +141,7 @@ As we want to deploy everything inside the MSIX package (files and registry keys
 This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command: 
 
 ```cmd
-Vb6VirtualRegistry.exe regsvr32 c:\github\Vb6VirtualRegistry\Sample\unpackaged\VFS c:\github\Vb6VirtualRegistry\Sample\unpackaged\registry.dat
+Vb6VirtualRegistry.exe regsvr32 c:\Sample\unpackaged\VFS c:\Sample\unpackaged\registry.dat
 ```
 
 Follows the expected result:
