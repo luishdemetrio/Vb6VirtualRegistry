@@ -137,7 +137,7 @@ As we want to deploy everything inside the MSIX package (files and registry keys
 This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command: 
 
 ```cmd
-Vb6VirtualRegistry.exe c:\github\Vb6VirtualRegistry\Sample\unpackaged\VFS c:\github\Vb6VirtualRegistry\Sample\unpackaged\registry.dat
+Vb6VirtualRegistry.exe regsvr32 c:\github\Vb6VirtualRegistry\Sample\unpackaged\VFS c:\github\Vb6VirtualRegistry\Sample\unpackaged\registry.dat
 ```
 
 Follows the expected result:
@@ -150,9 +150,18 @@ The next step is to copy the file to the package root:
 ![Registry.dat](Images/registryfile.png)
 
 
-#### Using PowerShell to package the folder.
+#### Packaging the directory to MSIX
 
-The following script will load the methods that will be used to create a self-signed certificate, to package and sign the MSIX file.
+Use the following command to package your directory to MSIX:
+
+```cmd
+Vb6VirtualRegistry.exe pack c:\github\Vb6VirtualRegistry\Sample\unpackaged\ c:\github\Vb6VirtualRegistry\Sample\myvb6app.msix
+```
+
+
+#### Using PowerShell to create a self-signed certificate
+
+The following script will load the methods that will be used to create a self-signed certificate:
 
 ```PowerShell
 
@@ -164,13 +173,15 @@ The following script will load the methods that will be used to create a self-si
 # notice that the name must be the same defined on the app manifest Publisher="CN=Vb6VirtualRegistry" 
 CreateCertificate "Vb6VirtualRegistry" "C:\github\Vb6VirtualRegistry\Scripts\Sample"
 
-# it is used to package the folder
-Pack-MSIX C:\github\Vb6VirtualRegistry\Sample\unpackaged C:\github\Vb6VirtualRegistry\Sample\myvb6app.msix
-
-# it signs the application with our test certificate
-Sign-MSIX C:\github\Vb6VirtualRegistry\Sample\myvb6app.msix "C:\github\Vb6VirtualRegistry\Sample\Vb6VirtualRegistry.pfx"
-
 ```
+#### Signing the MSIX file
+
+Use the following command to sign your directory to MSIX:
+
+```cmd
+Vb6VirtualRegistry.exe sign c:\github\Vb6VirtualRegistry\Sample\myvb6app.msix C:\github\Vb6VirtualRegistry\Scripts\Sample\VB6VirtualRegistry.pfx
+```
+
 
 Follows the result files:
 
