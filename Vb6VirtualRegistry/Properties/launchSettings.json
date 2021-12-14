@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "unpack \"C:\\msix\\IBI\\IbiPlus_1.0.1.0_x64__eamkjkkbw7e1a.msix\" \"C:\\msix\\files\" "
+      "commandLineArgs": "unpack C:\\msix\\IBI\\IbiPlus_1.0.4.0_x64__eamkjkkbw7e1a.msix c:\\msix\\ibifiles3"
     }
   }
 }
