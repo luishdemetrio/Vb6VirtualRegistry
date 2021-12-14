@@ -8,7 +8,7 @@ on:
         
 jobs:
   build:
-    name: Build and Deploy    
+    name: Build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,6 @@ jobs:
     steps:
       - name: Publish X86
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
-
 
   upload:
     needs: publish
