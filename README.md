@@ -46,9 +46,9 @@ You can easily generate the images for you application through the [PWA Builder 
 
 ![PWA Builder Image Generator](Images/pwabuilder.png)
 
-The application and its dependencies can be publish in any folder inside the package. It is possible to use the special folder called **VFS** that contains the corresponding folders for the Windows' well-known folders (System32, Program Files, etc). This is great for applications that expects files in the original path outside the package.
+The application and its dependencies can be published in any folder inside the package. It is possible to use the special folder called **VFS**, acronym for Virtual File System, that contains the corresponding folders for the Windows' well-known folders (System32, Program Files, etc). This is great for applications that expects files in the original path outside the package.
 
-For the Project1, the VFS contains the folders ProgramFilesX86 and SystemX86.
+For the Project1, the **VFS** contains the folders ProgramFilesX86 and SystemX86.
 
 ![Virtual File System folder](Images/vfsfolders.png)
 
@@ -57,7 +57,7 @@ Follows the content of the ProgramFilesX86 folder:
 
 ![Virtual File System folder](Images/programfilesx86folder.png)
 
-Because the myfile.txt file is inside the special folder **VFS\ProgramFilesX86**, during runtime Windows will redirect the application read attempt from **C:\Program Files (x86)\MyApp\myfile.txt** to the file inside the package. For example, in the next image it is possible to see that the myfile.txt path is hard coded to **C:\Program Files (x86)\MyApp\myfile.txt**.  
+Because the **myfile.txt** file is inside the special folder **VFS\ProgramFilesX86**, during runtime Windows will redirect the application read attempt from **C:\Program Files (x86)\MyApp\myfile.txt** to the file inside the package. For example, in the next image it is possible to see that the myfile.txt path is hard coded to **C:\Program Files (x86)\MyApp\myfile.txt**.  
 
 ![Virtual File System folder](Images/sourcecode.png)
 
@@ -129,7 +129,7 @@ Here is the application manifest content:
 
 ```
 
-If we try to package and install the Project1 to the MSIX format, the application will throw the following an exception during the initialization because the **RICHTX32.OCX is not registered**:
+If we try to package and install the Project1 to the MSIX format right now, the application will throw the following an exception during the initialization because the **RICHTX32.OCX is not registered**:
 
 ![Missing OCX](Images/notRegistered.png)
 
@@ -138,7 +138,7 @@ As we want to deploy everything inside the MSIX package (files and registry keys
 
 #### VB6VirtualRegistry.
 
-This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command: 
+This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, i.e., to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command: 
 
 ```cmd
 Vb6VirtualRegistry.exe regsvr32 c:\github\Vb6VirtualRegistry\Sample\unpackaged\VFS c:\github\Vb6VirtualRegistry\Sample\unpackaged\registry.dat
@@ -205,3 +205,15 @@ Follows the application running as MSIX:
 
 
 Once we are running as MSIX, we don't need admin privileges to install the application, once the application's components are now inside the virtual registry of the package.
+
+
+#### Unpack the MSIX file
+
+Use the following command to unpack your MSIX application:
+
+```cmd
+Vb6VirtualRegistry.exe unpack c:\github\Vb6VirtualRegistry\Sample\myvb6app.msix C:\github\Vb6VirtualRegistry\Scripts\Sample\unpack
+```
+
+Once you have unpacked it, you can now edit the files, images or regenerate the virtual registry.
+
