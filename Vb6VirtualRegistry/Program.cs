@@ -23,11 +23,11 @@ namespace Vb6VirtualRegistry
                 Console.WriteLine("    Vb6VirtualRegistry.exe [action] [args] [args]:");
 
                 Console.WriteLine("\nActions:");
-                Console.WriteLine("\n    pack");
-                Console.WriteLine("\n    unpack");
-                Console.WriteLine("\n    regsvr32");
-                Console.WriteLine("\n    regasm");
-                Console.WriteLine("\n    sign");
+                Console.WriteLine("    pack");
+                Console.WriteLine("    unpack");
+                Console.WriteLine("    regsvr32");
+                Console.WriteLine("    regasm");
+                Console.WriteLine("    sign");
 
 
                 Console.WriteLine("\nCreate virtual registry for VB6 components:");

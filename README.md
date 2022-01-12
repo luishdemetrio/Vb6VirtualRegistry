@@ -1,6 +1,9 @@
 [![.NET](https://github.com/luishdemetrio/Vb6VirtualRegistry/actions/workflows/dotnet.yml/badge.svg)](https://github.com/luishdemetrio/Vb6VirtualRegistry/actions/workflows/dotnet.yml)
 
 # VB6 Registry Tool
+
+![Visual Basic 6.0 demo project](Images/logo.png)
+
 This is a very specific project created to assist developers who want to publish their **Visual Basic 6.0 applications**, which still demand periodic updates/implementations, through the  [MSIX](https://docs.microsoft.com/en-us/windows/msix/overview "What is MSIX?") format.
 
 This project helps to automate the Visual Basic 6.0 packaging by generating a virtual registry file to be added on the **VB6 MSIX** package with the components (OCXs and DLLs) used by the VB6 application.
@@ -216,4 +219,8 @@ Vb6VirtualRegistry.exe unpack c:\github\Vb6VirtualRegistry\Sample\myvb6app.msix 
 ```
 
 Once you have unpacked it, you can now edit the files, images or regenerate the virtual registry.
+
+## Privacy Statement
+
+This application do not collect or use any personal information.
 
