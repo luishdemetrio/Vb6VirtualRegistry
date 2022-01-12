@@ -1,0 +1,47 @@
+﻿<Window x:Class="VB6VirtualRegistry.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VB6VirtualRegistry.WPF"
+        mc:Ignorable="d"
+        Title="VB6 Virtual Registry Tool" Height="567" Width="800">
+
+    <ScrollViewer>
+        <StackPanel Margin="10">
+
+            <TextBlock Text="About" FontWeight="Bold" FontSize="14" />
+
+            <TextBlock  Margin="0,10,0,0" 
+                        TextWrapping="Wrap"
+                        Text="This is a very specific project created to assist developers who want to publish their Visual Basic 6.0 applications, which still demand periodic updates/implementations, through the MSIX format."/>
+
+            <TextBlock  Margin="0,10,0,0" 
+                        TextWrapping="Wrap"
+                        Text="This project helps to automate the Visual Basic 6.0 packaging by generating a virtual registry file to be added on the VB6 MSIX package with the components (OCXs and DLLs) used by the VB6 application."/>
+
+            <TextBlock  Margin="0,10,0,0" 
+                        TextWrapping="Wrap"
+                        Text="This is an open-source project available on GitHub: https://github.com/luishdemetrio/Vb6VirtualRegistry"/>
+
+
+            <TextBlock  Margin="0,20,0,0" 
+                    Text="Usage" FontWeight="Bold" FontSize="14" />
+
+            <TextBlock  Margin="0,10,0,0" 
+                        TextWrapping="Wrap"
+                        Text="For now, this tool is supported by command line."/>
+
+
+            <TextBlock  Margin="0,10,0,0" x:Name="txtUsage"
+                        TextWrapping="Wrap"
+                        />
+
+            
+        </StackPanel>
+
+
+    </ScrollViewer>
+                
+    
+</Window>
