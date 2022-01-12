@@ -38,14 +38,16 @@
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
 
     <Application Id="vb6virtualregistry" Executable="Vb6VirtualRegistry\Vb6VirtualRegistry.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements DisplayName="ProcDump" Description="Vb6VirtualRegistry" BackgroundColor="transparent" Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png" AppListEntry="none" />
+        Square44x44Logo="Images\Square44x44Logo.png" AppListEntry="none" >
+        <uap:DefaultTile/>
+      </uap:VisualElements >
       <Extensions>
         <uap3:Extension Category="windows.appExecutionAlias">
           <uap3:AppExecutionAlias>
