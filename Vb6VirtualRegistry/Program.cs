@@ -12,7 +12,6 @@ namespace Vb6VirtualRegistry
             Console.WriteLine("Virtual Registry tool utility for Visual Basic 6.0 applications");
             Console.WriteLine("https://github.com/luishdemetrio/Vb6VirtualRegistry");
 
-
             string arg3 = string.Empty;
 
             if (args.Length < 2)
@@ -52,8 +51,6 @@ namespace Vb6VirtualRegistry
                 arg3 = args[2];
             }
 
-            Console.WriteLine("antes");
-            
             
             PackageFactory.Run(args[0], args[1], arg3) ;
         }

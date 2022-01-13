@@ -15,7 +15,6 @@ namespace Vb6VirtualRegistry
 
             string virtualRegistry = pVirtualRegistry;
 
-            Console.WriteLine("IsNullOrEmpty");
             if (string.IsNullOrEmpty(virtualRegistry))
             {
                 string result = System.Reflection.Assembly.GetExecutingAssembly().Location;
