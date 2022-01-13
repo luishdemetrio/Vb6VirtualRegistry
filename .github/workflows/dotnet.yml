@@ -15,7 +15,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1
+          dotnet-version: net6.0
      
       - name: Restore dependencies
         run: dotnet restore
@@ -23,7 +23,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
   
       - name: Publish X86
-        run: dotnet publish Vb6VirtualRegistry --configuration Release --framework netcoreapp3.1 --runtime win-x86 /p:PublishSingleFile=true --self-contained true --output ./artifacts
+        run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0 --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
 
       - name: Upload X86 Artifact
         uses: actions/upload-artifact@v2

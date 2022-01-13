@@ -15,6 +15,7 @@ namespace Vb6VirtualRegistry
 
             string virtualRegistry = pVirtualRegistry;
 
+            Console.WriteLine("IsNullOrEmpty");
             if (string.IsNullOrEmpty(virtualRegistry))
             {
                 string result = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -52,6 +53,8 @@ namespace Vb6VirtualRegistry
                     break;
 
             }
+
+            Console.WriteLine("run");
 
             if (package != null)
                 package.Run(pParameter, virtualRegistry);

@@ -46,11 +46,15 @@ namespace Vb6VirtualRegistry
                 Console.WriteLine("    Vb6VirtualRegistry.exe sign c:\\MyApp\\myapp.msix c:\\MyApp\\mycertificate.pfx");
 
                 return;
-            } else if (args.Length == 3)
+            }
+            else if (args.Length == 3)
             {
                 arg3 = args[2];
             }
-        
+
+            Console.WriteLine("antes");
+            
+            
             PackageFactory.Run(args[0], args[1], arg3) ;
         }
     }
