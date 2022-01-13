@@ -56,8 +56,8 @@ namespace Vb6VirtualRegistry
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine(ex.Message);
+                
+                Console.WriteLine(ex);
             }
         }
 
@@ -84,14 +84,16 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
 
         private string GetCurrentDirectory()
         {
-            string result = System.Reflection.Assembly.GetExecutingAssembly().Location; 
-            int index = result.LastIndexOf("\\"); 
+            string result = Process.GetCurrentProcess().MainModule.FileName; // Environment.ProcessPath;//System.Reflection.Assembly.GetExecutingAssembly().Location;
+            
+            int index = result.LastIndexOf("\\");
+
             return $"{result.Substring(0, index)}";
 
         }
@@ -123,7 +125,7 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
 
@@ -152,7 +154,7 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
     }
