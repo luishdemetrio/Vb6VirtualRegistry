@@ -14,6 +14,7 @@ namespace Vb6VirtualRegistry
 
 
             string arg3 = string.Empty;
+            bool appendVirtualRegistry= false;
 
             if (args.Length < 2)
             {
@@ -32,6 +33,7 @@ namespace Vb6VirtualRegistry
 
                 Console.WriteLine("\nCreate virtual registry for VB6 components:");
                 Console.WriteLine("    Vb6VirtualRegistry.exe regsvr32 c:\\MyApp\\unpackagedFiles c:\\MyApp\\unpackagedFiles\\registry.dat");
+                Console.WriteLine("    Vb6VirtualRegistry.exe regsvr32 c:\\MyApp\\unpackagedFiles c:\\MyApp\\unpackagedFiles\\registry.dat --append");
 
                 Console.WriteLine("\nCreate virtual registry for .NET components:");
                 Console.WriteLine("    Vb6VirtualRegistry.exe regasm c:\\MyApp\\unpackagedFiles\\VFS\\SystemX86\\CrystalReport13.dll c:\\vb6\\registry.dat");
@@ -52,10 +54,15 @@ namespace Vb6VirtualRegistry
                 arg3 = args[2];
             }
 
-            Console.WriteLine("antes");
-            
-            
-            PackageFactory.Run(args[0], args[1], arg3) ;
+            if(args.Length == 4)
+            {
+                arg3 = args[2];
+                appendVirtualRegistry = true;
+            }
+                
+   
+
+            PackageFactory.Run(args[0], args[1], arg3, appendVirtualRegistry) ;
         }
     }
 }

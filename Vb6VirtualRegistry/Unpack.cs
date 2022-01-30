@@ -21,7 +21,7 @@ namespace Vb6VirtualRegistry
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
 
@@ -54,7 +54,10 @@ namespace Vb6VirtualRegistry
 
         private string GetCurrentDirectory()
         {
-            string result = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            // System.Reflection.Assembly.GetExecutingAssembly().Location;
+            //https://github.com/dotnet/runtime/issues/13051#issuecomment-510267727
+
+            string result = Process.GetCurrentProcess().MainModule.FileName; 
             int index = result.LastIndexOf("\\");
             return $"{result.Substring(0, index)}";
 
