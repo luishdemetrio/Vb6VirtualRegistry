@@ -93,7 +93,7 @@ namespace Vb6VirtualRegistry
 
         private string GetCurrentDirectory()
         {
-            string result = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string result = Process.GetCurrentProcess().MainModule.FileName; //System.Reflection.Assembly.GetExecutingAssembly().Location;
             int index = result.LastIndexOf("\\");
             return $"{result.Substring(0, index)}";
 

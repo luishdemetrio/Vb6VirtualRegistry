@@ -141,7 +141,7 @@ As we want to deploy everything inside the MSIX package (files and registry keys
 
 #### VB6VirtualRegistry.
 
-This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, i.e., to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command: 
+This is the moment where we can use the **VB6 Virtual Registry tool** to create the virtual registry. The tool will register the component in the physical machine to next export the registry to the virtual registry.dat. As I don't want to have this component registered on my production machine, i.e., to not compromise my tests, since this file will be deployed inside the MSIX package, I will use a VM to run the following command that needs to run elevated (as admin): 
 
 ```cmd
 Vb6VirtualRegistry.exe regsvr32 c:\github\Vb6VirtualRegistry\Sample\unpackaged\VFS c:\github\Vb6VirtualRegistry\Sample\unpackaged\registry.dat
