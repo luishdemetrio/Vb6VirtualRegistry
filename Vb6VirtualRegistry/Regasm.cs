@@ -11,8 +11,11 @@ namespace Vb6VirtualRegistry
     public sealed class Regasm : IPackageAction
     {
         string _virtualRegistryPath;
+
         string _temporaryVirtualRegistryKeyName = $"MSIXTool_{Guid.NewGuid()}";
+
         List<string> _regasmComponents = new List<string>();
+
         const string _regasmPath = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319";
 
         public void Run(string pParameter, string pVirtualRegistryPath)
@@ -294,7 +297,8 @@ namespace Vb6VirtualRegistry
                                                                 "SystemX64",
                                                                 "SYSTEM~1",
                                                                 "SYSTEM~2",
-                                                                "Windows"
+                                                                "Windows",
+                                                                "Fonts"
                                                              };
 
             var resultList = directoryValues.FindLast(s => pValue.IndexOf(s) > 0);

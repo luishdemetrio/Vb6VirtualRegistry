@@ -56,14 +56,14 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
-    <EntryPointProjectUniqueName>..\VB6VirtualRegistry.WPF\VB6VirtualRegistry.WPF.csproj</EntryPointProjectUniqueName>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <PackageCertificateThumbprint>05EB7B633F8D535F9B5E0D6CD0E7FAD617FABB4B</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <EntryPointProjectUniqueName>..\VB6VirtualRegistry.WinForm\VB6VirtualRegistry.WinForm.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AppxBundle>Never</AppxBundle>
@@ -105,7 +105,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VB6VirtualRegistry.WPF\VB6VirtualRegistry.WPF.csproj" />
+    <ProjectReference Include="..\VB6VirtualRegistry.WinForm\VB6VirtualRegistry.WinForm.csproj" />
     <ProjectReference Include="..\Vb6VirtualRegistry\Vb6VirtualRegistry.csproj" />
   </ItemGroup>
   <ItemGroup>

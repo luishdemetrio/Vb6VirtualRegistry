@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Vb6VirtualRegistry
 {
     public class PackageFactory
     {
-        public static string Run(string pAction, string pParameter, string pVirtualRegistry)
+        public static string Run(string pAction, string pParameter, string pVirtualRegistry, bool appendVirtualRegistryFile)
         {
 
             string returnMessage = string.Empty;
@@ -15,14 +16,7 @@ namespace Vb6VirtualRegistry
 
             string virtualRegistry = pVirtualRegistry;
 
-            Console.WriteLine("IsNullOrEmpty");
-            if (string.IsNullOrEmpty(virtualRegistry))
-            {
-                string result = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                int index = result.LastIndexOf("\\");
-                virtualRegistry = $"{result.Substring(0, index)}\\registry.dat";
-            }
-
+          
             switch (pAction)
             {
              
@@ -33,7 +27,12 @@ namespace Vb6VirtualRegistry
 
 
                 case "regsvr32":
-                    package = new Regsvr32();
+                    
+                    if(appendVirtualRegistryFile)
+                        package = new Regsvr32(true);
+                    else
+                        package = new Regsvr32();
+                                        
                     returnMessage = "Registry file successfuly created.";
                     break;
 
@@ -53,8 +52,6 @@ namespace Vb6VirtualRegistry
                     break;
 
             }
-
-            Console.WriteLine("run");
 
             if (package != null)
                 package.Run(pParameter, virtualRegistry);
