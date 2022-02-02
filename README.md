@@ -224,3 +224,5 @@ Once you have unpacked it, you can now edit the files, images or regenerate the 
 
 This application do not collect or use any personal information.
 
+I just wrote an article at [Windows Dev AppConsult](https://techcommunity.microsoft.com/t5/windows-dev-appconsult/how-msix-is-great-for-simplify-deployment-for-visual-basic-6-0/ba-p/3106904) where it is possible to post comments.
+
