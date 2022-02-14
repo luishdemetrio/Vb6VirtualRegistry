@@ -27,7 +27,7 @@ jobs:
          path: ./artifacts/Vb6VirtualRegistry.exe
    
       - name: Create release archive X86
-        run: Compress-Archive -Path ./artifacts/Vb6VirtualRegistry.exe -DestinationPath ./artifacts/Vb6VirtualRegistry32.zip 
+        run: Compress-Archive -Path ./artifacts/* -DestinationPath ./artifacts/Vb6VirtualRegistry.zip 
        
       - name: Create GitHub Release
         id: create_release
