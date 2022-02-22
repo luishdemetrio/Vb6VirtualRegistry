@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dotnet-results
-          path: ./TestResults
+          path: TestResults
           
       - name: Publish
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
