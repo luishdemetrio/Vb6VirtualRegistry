@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET Core
@@ -17,8 +18,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
      
-      - name: Publish X86
+      - name: Build
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
+
+      - name: Test
+        run: dotnet test VB6VirtualRegistry.Test --configuration Release --framework net6.0-windows --runtime win-x86 --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - name: Upload X86 Artifact
         uses: actions/upload-artifact@v2
