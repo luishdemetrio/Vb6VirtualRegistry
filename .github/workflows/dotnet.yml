@@ -18,21 +18,9 @@ jobs:
         with:
           dotnet-version: 6.0.x
           
-      - name: Restore
-        run: dotnet restore VB6VirtualRegistry -r win-x86
-     
-      - name: Build
-        run: dotnet build VB6VirtualRegistry -r win-x86
-        
       - name: Test
-        run: dotnet test VB6VirtualRegistry.Test -r win-x86 --no-restore --verbosity normal --logger trx --results-directory ./TestResults
-      
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: dotnet-results
-          path: ./TestResults
-          
+        run: dotnet test VB6VirtualRegistry.Test
+            
       - name: Publish
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
 
