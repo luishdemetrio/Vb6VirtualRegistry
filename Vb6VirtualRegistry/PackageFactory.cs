@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
+﻿
 namespace Vb6VirtualRegistry
 {
     public class PackageFactory
     {
-        public static string Run(string pAction, string pParameter, string pVirtualRegistry, bool appendVirtualRegistryFile)
+        public static string Run(string pAction, string pParameter, string pVirtualRegistry, 
+                                 bool appendVirtualRegistryFile, string pCertificatePassword)
         {
 
             string returnMessage = string.Empty;
@@ -47,7 +44,8 @@ namespace Vb6VirtualRegistry
                     break;
 
                 case "sign":
-                    package = new Sign();
+                    package = new Sign(pCertificatePassword);
+
                     returnMessage = "Packaged successfuly signed.";
                     break;
 

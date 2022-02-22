@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -7,10 +6,22 @@ namespace Vb6VirtualRegistry
 {
     public sealed class Sign : IPackageAction
     {
+        private string _certificatePassword = string.Empty;
+
+        
+        public Sign(string pCertificatePassword)
+        {
+            _certificatePassword = pCertificatePassword;
+        }
+
         public void Run(string pMSIXPackage, string pCertificatePath)
         {
             try
             {
+
+                pMSIXPackage = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pMSIXPackage);
+
+                pCertificatePath = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pCertificatePath);
 
                 SignPackage(pMSIXPackage, pCertificatePath);
 
@@ -23,7 +34,7 @@ namespace Vb6VirtualRegistry
 
         private static string GetCertificatePassword()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new ();
             while (true)
             {
                 ConsoleKeyInfo cki = Console.ReadKey(true);
@@ -54,49 +65,44 @@ namespace Vb6VirtualRegistry
         private void SignPackage(string pMSIXPackage, string pCertificatePath)
         {
 
-            var certificatePassword = String.Empty;
+            
             try
             {
                 Console.WriteLine("Enter the certificate password: ");
 
-                certificatePassword = GetCertificatePassword();
+                if (String.IsNullOrEmpty(_certificatePassword))
+                    _certificatePassword = GetCertificatePassword();
 
-                if (string.IsNullOrEmpty(certificatePassword))
+                if (string.IsNullOrEmpty(_certificatePassword))
                 {
                     Console.WriteLine("Invalid certificate password!");
                     return;
 
                 }
 
-                using (var makeappx = new Process())
-                {
-                    var fileName = $"{GetCurrentDirectory()}\\SDK\\signtool.exe";
+                using var makeappx = new Process();
+                
+                var fileName = $"{CurrentDirectoryHelper.GetCurrentDirectory()}\\SDK\\signtool.exe";
 
-                    var args = $"sign /a /debug /v /fd SHA256 /td SHA256 /f \"{pCertificatePath}\" /p \"{certificatePassword}\" {pMSIXPackage} ";
+                var args = $"sign /a /debug /v /fd SHA256 /td SHA256 /f \"{pCertificatePath}\" /p \"{_certificatePassword}\" {pMSIXPackage} ";
 
-                    makeappx.StartInfo.FileName = fileName;
-                    makeappx.StartInfo.Arguments = args;
+                makeappx.StartInfo.FileName = fileName;
+                makeappx.StartInfo.Arguments = args;
 
-                    makeappx.Start();
+                makeappx.Start();
 
-                    makeappx.WaitForExit();
+                makeappx.WaitForExit();
 
-                    Console.WriteLine(fileName + args);
-                }
+                Console.WriteLine(fileName + args);
+                
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message.Replace(certificatePassword, "Secret"));
+                Console.WriteLine(ex.Message.Replace(_certificatePassword, "Secret"));
             }
         }
 
-        private string GetCurrentDirectory()
-        {
-            string result = Process.GetCurrentProcess().MainModule.FileName; //System.Reflection.Assembly.GetExecutingAssembly().Location;
-            int index = result.LastIndexOf("\\");
-            return $"{result.Substring(0, index)}";
-
-        }
+     
     }
 }
