@@ -10,14 +10,25 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+          
      
-      - name: Publish X86
+      - name: Test
+        run: dotnet test VB6VirtualRegistry.Test -r win-x86 --no-restore --verbosity normal --logger trx --results-directory ./TestResults
+      
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotnet-results
+          path: ./TestResults
+          
+      - name: Publish
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
 
       - name: Upload X86 Artifact
