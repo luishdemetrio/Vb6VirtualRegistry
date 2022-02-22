@@ -7,14 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vb6VirtualRegistry", "Vb6Vi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffregLib", "OffregLib\OffregLib.csproj", "{B736127C-9B9C-4C5F-A992-55971BEC0E68}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1CC2E724-2BD0-478E-8972-383B357BCFE9}"
-	ProjectSection(SolutionItems) = preProject
-		build\dotnet.yml = build\dotnet.yml
-	EndProjectSection
-EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "VB6VirtualRegistry.Package", "VB6VirtualRegistry.Package\VB6VirtualRegistry.Package.wapproj", "{90E3296F-4FD8-4B64-928E-8A845FDFA07F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VB6VirtualRegistry.WinForm", "VB6VirtualRegistry.WinForm\VB6VirtualRegistry.WinForm.csproj", "{92580052-3996-4745-BE7E-CA69A5738B7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F8C68065-772A-42DE-8827-84462A28F575}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB6VirtualRegistry.Test", "VB6VirtualRegistry.Test\VB6VirtualRegistry.Test.csproj", "{7FA88580-2236-48C7-980D-B8D01F17B8AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,9 +119,32 @@ Global
 		{92580052-3996-4745-BE7E-CA69A5738B7C}.Release|x64.Build.0 = Release|Any CPU
 		{92580052-3996-4745-BE7E-CA69A5738B7C}.Release|x86.ActiveCfg = Release|x86
 		{92580052-3996-4745-BE7E-CA69A5738B7C}.Release|x86.Build.0 = Release|x86
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|x64.Build.0 = Debug|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|x86.ActiveCfg = Debug|x86
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Debug|x86.Build.0 = Debug|x86
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|ARM.Build.0 = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|ARM64.Build.0 = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|x64.ActiveCfg = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|x64.Build.0 = Release|Any CPU
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|x86.ActiveCfg = Release|x86
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7FA88580-2236-48C7-980D-B8D01F17B8AC} = {F8C68065-772A-42DE-8827-84462A28F575}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EB1D96D-7D28-4837-B566-D577933DD1B8}
