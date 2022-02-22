@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "regsvr32 C:\\msix\\harry\\VFS\\SystemX86 C:\\msix\\harry\\registry.dat --append"
+      "commandLineArgs": "pack C:\\msix\\harry\\ C:\\msix\\harry\\registry.dat --append"
     }
   }
 }
