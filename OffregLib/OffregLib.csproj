@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <PlatformTarget>x86</PlatformTarget>
-    <Platforms>x86</Platforms>
-    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    
   </PropertyGroup>
 
   <ItemGroup>
