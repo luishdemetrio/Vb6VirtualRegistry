@@ -11,7 +11,7 @@
   <Identity
     Name="14599LuisHenriqueDemetrio.VB6VirtualRegistry"
     Publisher="CN=D41B7B19-5228-4598-91B2-5CF23C974C5F"
-    Version="1.0.1.0" />
+    Version="1.0.4.0" />
 
   <Properties>
     <DisplayName>VB6 Virtual Registry</DisplayName>
