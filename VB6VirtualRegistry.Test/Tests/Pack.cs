@@ -42,11 +42,11 @@ namespace VB6VirtualRegistry.Test
         public void RelativePath()
         {
 
-            string[] args = { "pack", "unpackaged", "result.msix" };
+            string[] args = { "pack", "unpackaged", "myvb6appR.msix" };
 
             Vb6VirtualRegistry.Program.Main(args);
 
-            Assert.True(File.Exists("result.msix"));
+            Assert.True(File.Exists("myvb6appR.msix"));
 
 
         }
