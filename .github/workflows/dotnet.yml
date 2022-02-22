@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dotnet-results
-          path: TestResults
+          path: ./TestResults
 
       - name: Upload X86 Artifact
         uses: actions/upload-artifact@v2
