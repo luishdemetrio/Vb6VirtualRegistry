@@ -20,7 +20,7 @@ jobs:
           
      
       - name: Test
-        run: dotnet test VB6VirtualRegistry.Test --configuration x86 --verbosity normal --logger trx --results-directory "TestResults"
+        run: dotnet test VB6VirtualRegistry.Test -r win-x86 --verbosity normal --logger trx --results-directory "TestResults"
       
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v2
