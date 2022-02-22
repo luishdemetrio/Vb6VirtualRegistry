@@ -393,7 +393,7 @@ namespace Vb6VirtualRegistry
 
         private static void ExportKey(RegistryKey localKey, OffregKey virtualKey)
         {
-
+            
             foreach (var valueName in localKey.GetValueNames())
             {
                 var vn = localKey.GetValue(valueName);
