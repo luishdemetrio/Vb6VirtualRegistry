@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Vb6VirtualRegistry
 {
@@ -14,14 +12,18 @@ namespace Vb6VirtualRegistry
 
         string _temporaryVirtualRegistryKeyName = $"MSIXTool_{Guid.NewGuid()}";
 
-        List<string> _regasmComponents = new List<string>();
+        List<string> _regasmComponents = new ();
 
         const string _regasmPath = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319";
 
         public void Run(string pParameter, string pVirtualRegistryPath)
-        {            
-            _virtualRegistryPath = pVirtualRegistryPath;
 
+        {
+            pParameter = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pParameter);
+
+            _virtualRegistryPath = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pVirtualRegistryPath);
+
+            
             LoadComponents(pParameter);
 
             if (_regasmComponents == null || _regasmComponents.Count ==0)
@@ -51,38 +53,36 @@ namespace Vb6VirtualRegistry
 
         private void CreateVirtualRegistryFile(string pPackagedRegistry)
         {
-            using (var virtualHive = OffregHive.Create())
-            using (var virtualRegistryEntry = virtualHive.Root.CreateSubKey("REGISTRY"))
-            using (var virtualMachineEntry = virtualRegistryEntry.CreateSubKey("MACHINE"))
-            using (var virtualSoftwareEntry = virtualMachineEntry.CreateSubKey("SOFTWARE"))
-            using (var virtualClassesEntry = virtualSoftwareEntry.CreateSubKey("Classes"))
-            {
-                virtualHive.SaveHive(pPackagedRegistry, 5, 1);
-                Console.WriteLine($"Saving file {pPackagedRegistry}");
-            }
-
+            using var virtualHive = OffregHive.Create();
+            using var virtualRegistryEntry = virtualHive.Root.CreateSubKey("REGISTRY");
+            using var virtualMachineEntry = virtualRegistryEntry.CreateSubKey("MACHINE");
+            using var virtualSoftwareEntry = virtualMachineEntry.CreateSubKey("SOFTWARE");
+            using var virtualClassesEntry = virtualSoftwareEntry.CreateSubKey("Classes");
+            
+            virtualHive.SaveHive(pPackagedRegistry, 5, 1);
+            Console.WriteLine($"Saving file {pPackagedRegistry}");
+            
         }
 
         private void LoadVirtualHiveToRealRegistry()
         {
-            using (var p = new Process())
+            using var p = new Process();
+            
+            p.StartInfo.FileName = "REG.exe";
+            p.StartInfo.Arguments = $"LOAD HKLM\\{_temporaryVirtualRegistryKeyName} {_virtualRegistryPath}";
+
+            Console.WriteLine($"{p.StartInfo.FileName} {p.StartInfo.Arguments}");
+
+            p.Start();
+            p.WaitForExit();
+
+            if (p.ExitCode != 0)
             {
-                p.StartInfo.FileName = "REG.exe";
-                p.StartInfo.Arguments = $"LOAD HKLM\\{_temporaryVirtualRegistryKeyName} {_virtualRegistryPath}";
-
-                Console.WriteLine($"{p.StartInfo.FileName} {p.StartInfo.Arguments}");
-
-                p.Start();
-                p.WaitForExit();
-
-                if (p.ExitCode != 0)
-                {
-                    Console.WriteLine($"LoadVirtualHiveToRealRegistry: ExitCode {p.ExitCode}");
-                    Console.WriteLine("Probably you need run this App elevated to generate the keys files!");
-                    return;
-                }
-
+                Console.WriteLine($"LoadVirtualHiveToRealRegistry: ExitCode {p.ExitCode}");
+                Console.WriteLine("Probably you need run this App elevated to generate the keys files!");
+                return;
             }
+            
 
             Console.WriteLine($"Virtual registry {_virtualRegistryPath} successfuly loaded.");
             
@@ -157,25 +157,25 @@ namespace Vb6VirtualRegistry
         {
 
 
-            using (var p = new Process())
+            using var p = new Process();
+
+            p.StartInfo.FileName = $"{_regasmPath}\\regasm.exe";
+            p.StartInfo.Arguments = $"{item} /codebase";
+
+            p.Start();
+            p.WaitForExit();
+            Console.WriteLine($"Exporting regasm keys for: {item}");
+
+
+            if (p.ExitCode != 0)
             {
-                p.StartInfo.FileName = $"{_regasmPath}\\regasm.exe";
-                p.StartInfo.Arguments = $"{item} /codebase";
+                Console.WriteLine($"RunRegasm: ExitCode {p.ExitCode}");
 
-                p.Start();
-                p.WaitForExit();
-                Console.WriteLine($"Exporting regasm keys for: {item}");
-
-
-                if (p.ExitCode != 0)
-                {
-                    Console.WriteLine($"RunRegasm: ExitCode {p.ExitCode}");
-
-                    Console.WriteLine("Probably you need run this App elevated!");
-                    return;
-                }
-
+                Console.WriteLine("Probably you need run this App elevated!");
+                return;
             }
+
+            
         }
 
         private int GenerateRegFile(string item)
@@ -219,7 +219,7 @@ namespace Vb6VirtualRegistry
             return list;
         }
 
-        private void CreateVirtualRegistryEntries(string item, string clsId, string pProcessorArchitecture,
+        private static void CreateVirtualRegistryEntries(string item, string clsId, string pProcessorArchitecture,
                                                  string pPhysicalHive, string pVirtualHive)
         {
             string fullClsidPath = ExportClsidFromRegistry(item, clsId, pProcessorArchitecture);
@@ -285,7 +285,7 @@ namespace Vb6VirtualRegistry
         private static string ReplacePhysicalPathForVirtualOne(string pValue)
         {
 
-            List<String> directoryValues = new List<string>(){  "AppVPackageDrive",
+            List<String> directoryValues = new (){  "AppVPackageDrive",
                                                                 "Common Desktop",
                                                                 "Common Programs",
                                                                 "Local AppData",
@@ -315,7 +315,7 @@ namespace Vb6VirtualRegistry
 
         private static string ReplaceKeyEntryValues(string pValue, string pDirectory)
         {
-            string msixValue = String.Empty;
+            string msixValue;
 
             //replace
             //C:\MSIX\TAP\extracted\VFS\ProgramFilesX64\Componentes\Integrada.dll
@@ -338,7 +338,7 @@ namespace Vb6VirtualRegistry
 
      
 
-        private void ImportRegistryFile(string pRegFile, string pPhysicalHive, string pVirtualHive)
+        private static void ImportRegistryFile(string pRegFile, string pPhysicalHive, string pVirtualHive)
         {
             string value = File.ReadAllText(pRegFile).Replace(pPhysicalHive, pVirtualHive);
 

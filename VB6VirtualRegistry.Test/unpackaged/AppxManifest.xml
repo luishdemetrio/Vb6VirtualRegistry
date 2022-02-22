@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10" IgnorableNamespaces="uap uap10 rescap com">
+ 
+  <Identity Name="VB6Sample" Publisher="CN=Vb6VirtualRegistry" Version="1.0.0.0" ProcessorArchitecture="x86" />
+  <Properties>
+    <DisplayName>VB6 Sample</DisplayName>
+    <PublisherDisplayName>AppConsult</PublisherDisplayName>
+    <Description>VB6 Sample</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap10:PackageIntegrity>
+      <uap10:Content Enforcement="on" />
+    </uap10:PackageIntegrity>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.1" />
+  </Dependencies>
+  <Applications>
+
+    <Application Id="App" Executable="VFS\ProgramFilesX86\MyApp\Project1.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements BackgroundColor="transparent" DisplayName="VB6 Sample" 
+                          Square150x150Logo="Assets\VBSix-Square150x150Logo.png" 
+                          Square44x44Logo="Assets\VBSix-Square44x44Logo.png"
+                          Description="VB6 Sample">
+        <uap:DefaultTile  Wide310x150Logo="Assets\VBSix-Wide310x150Logo.png" 
+                          Square310x310Logo="Assets\VBSix-Square310x310Logo.png" 
+                          Square71x71Logo="Assets\VBSix-Square71x71Logo.png"/>
+      </uap:VisualElements>
+      
+    </Application>
+     </Applications>
+  
+<Capabilities>
+  <rescap:Capability Name="runFullTrust" />
+</Capabilities>
+</Package>
