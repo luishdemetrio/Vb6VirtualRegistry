@@ -25,11 +25,8 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Build
-        run: dotnet build Vb6VirtualRegistry --configuration Release --no-restore
-    
       - name: Test
-        run: dotnet test Vb6VirtualRegistry.Test
+        run: dotnet test Vb6VirtualRegistry.Test --configuration Release --no-restore
             
       - name: Publish
         run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
