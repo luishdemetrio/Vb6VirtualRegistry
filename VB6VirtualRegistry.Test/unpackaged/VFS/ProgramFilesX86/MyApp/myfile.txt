@@ -1,0 +1,3 @@
+This file is in the packaged folder ProgramFilesX86\MyApp\myfile.txt.
+
+But for the VB6 application the file is on C:\Program Files (x86)\MyApp\myfile.txt

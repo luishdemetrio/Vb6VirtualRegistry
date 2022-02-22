@@ -3,8 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Platforms>x86</Platforms>
-    <PublishSingleFile>true</PublishSingleFile>
+    <PlatformTarget>x86</PlatformTarget>
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>

@@ -35,7 +35,11 @@ namespace Vb6VirtualRegistry
 
         public void Run(string pParameter, string pVirtualRegistryPath)
         {
-            
+
+            pParameter = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pParameter);
+
+            pVirtualRegistryPath = CurrentDirectoryHelper.GetAbsolutePathFromRelative(pVirtualRegistryPath);
+
             _components = GetComponents(pParameter);
 
             RegistryComponentsToRealRegistry();
@@ -45,7 +49,7 @@ namespace Vb6VirtualRegistry
             
         }
 
-       private List<string> GetComponents(string pPath)
+       private static List<string> GetComponents(string pPath)
         {
 
 
@@ -61,14 +65,14 @@ namespace Vb6VirtualRegistry
             {
                 try
                 {
-                    using (var process = new Process())
-                    {
-                        process.StartInfo.FileName = "regsvr32.exe";
-                        process.StartInfo.Arguments = $"/s {item}";
-                        process.Start();
-                        Console.WriteLine($"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
-                        process.WaitForExit();
-                    }
+                    using var process = new Process();
+                    
+                    process.StartInfo.FileName = "regsvr32.exe";
+                    process.StartInfo.Arguments = $"/s {item}";
+                    process.Start();
+                    Console.WriteLine($"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
+                    process.WaitForExit();
+                    
                 }
                 catch (Exception ex)
                 {
@@ -166,8 +170,7 @@ namespace Vb6VirtualRegistry
 
                 for (int i = 0; i < typeInfoCount; i++)
                 {
-                    ITypeInfo typeInfo = null;
-                    typeLib.GetTypeInfo(i, out typeInfo);
+                    typeLib.GetTypeInfo(i, out ITypeInfo typeInfo);
 
                     //figure out what guids, typekind, and names of the thing we're dealing with
                     IntPtr ipTypeAttr = IntPtr.Zero;
@@ -184,9 +187,7 @@ namespace Vb6VirtualRegistry
                         Guid typeId = typeattr.guid;
 
                         //get the name of the type
-                        string strName, strDocString, strHelpFile;
-                        int dwHelpContext;
-                        typeLib.GetDocumentation(i, out strName, out strDocString, out dwHelpContext, out strHelpFile);
+                        typeLib.GetDocumentation(i, out string strName, out string strDocString, out int dwHelpContext, out string strHelpFile);
 
 
 
@@ -204,10 +205,11 @@ namespace Vb6VirtualRegistry
                                 //save at:
                                 //\REGISTRY\MACHINE\SOFTWARE\Classes\TypeLib\{DFF71238-4555-42EA-AC07-679B142559B5}
                                 Console.WriteLine($"TypeLib\\{tlbId.ToString("B").ToUpper()}");
-                                using (var typeLibEntrySubKey = typeLibEntry.CreateSubKey(tlbId.ToString("B").ToUpper()))
-                                {
-                                    ExportKey(localTypeLibKey, typeLibEntrySubKey);
-                                }
+                                
+                                var typeLibEntrySubKey = typeLibEntry.CreateSubKey(tlbId.ToString("B").ToUpper());
+                                
+                                ExportKey(localTypeLibKey, typeLibEntrySubKey);
+                                
 
                             }
                         }
@@ -217,52 +219,50 @@ namespace Vb6VirtualRegistry
                             //read from:
                             //HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
 
-                            using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
-                            using (var virtualCLSID = virtualWOW6432CLSIDKey.CreateSubKey("CLSID"))
+                            using var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node");
+                            using var virtualCLSID = virtualWOW6432CLSIDKey.CreateSubKey("CLSID");
+                            
+                            var localWOW6432CLSIDKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
+
+                            if (localWOW6432CLSIDKey != null)
                             {
-                                var localWOW6432CLSIDKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
-
-                                if (localWOW6432CLSIDKey != null)
+                                //save at:
+                                //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                Console.WriteLine($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
+                                using (var virtualCLSIDEntrySubKey = virtualCLSID.CreateSubKey(typeId.ToString("B").ToUpper()))
                                 {
-                                    //save at:
-                                    //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\CLSID\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    Console.WriteLine($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}");
-                                    using (var virtualCLSIDEntrySubKey = virtualCLSID.CreateSubKey(typeId.ToString("B").ToUpper()))
+                                    ExportKey(localWOW6432CLSIDKey, virtualCLSIDEntrySubKey);
+                                }
+
+                                //INSIDE DEFAULT KEY
+                                //PRODID: HKEY_CLASSES_ROOT\ARRECINTEGRA.ClsT_ANU_USO_INDE
+
+                                var localProgID = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}\\ProgID");
+
+                                if (localProgID != null)
+                                {
+                                    //saves at:
+                                    //REGISTRY\MACHINE\SOFTWARE\Classes\ARRECINTEGRA.ClsT_ANU_USO_INDE
+
+                                    var ProgIDValue = localProgID.GetValue("").ToString();
+
+                                    if (ProgIDValue != null)
                                     {
-                                        ExportKey(localWOW6432CLSIDKey, virtualCLSIDEntrySubKey);
-                                    }
+                                        using var virtualProgID = virtualClassesEntry.CreateSubKey(ProgIDValue);
+                                        
+                                        var localProgIDKey = Registry.ClassesRoot.OpenSubKey(ProgIDValue);
 
-                                    //INSIDE DEFAULT KEY
-                                    //PRODID: HKEY_CLASSES_ROOT\ARRECINTEGRA.ClsT_ANU_USO_INDE
-
-                                    var localProgID = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\CLSID\\{typeId.ToString("B").ToUpper()}\\ProgID");
-
-                                    if (localProgID != null)
-                                    {
-                                        //saves at:
-                                        //REGISTRY\MACHINE\SOFTWARE\Classes\ARRECINTEGRA.ClsT_ANU_USO_INDE
-
-                                        var ProgIDValue = localProgID.GetValue("").ToString();
-
-                                        if (ProgIDValue != null)
+                                        if (localProgIDKey != null)
                                         {
-                                            using (var virtualProgID = virtualClassesEntry.CreateSubKey(ProgIDValue))
-                                            {
 
-                                                var localProgIDKey = Registry.ClassesRoot.OpenSubKey(ProgIDValue);
+                                            ExportKey(localProgIDKey, virtualProgID);
 
-                                                if (localProgIDKey != null)
-                                                {
-
-                                                    ExportKey(localProgIDKey, virtualProgID);
-
-                                                }
-                                            }
                                         }
-
+                                        
                                     }
 
                                 }
+
                             }
                         }
 
@@ -278,46 +278,44 @@ namespace Vb6VirtualRegistry
                             //HKCR\Interface\{26995163-87A0-4667-82B1-D304274EEE98}
 
                             if (!virtualClassesEntry.SubkeyExist("WOW6432Node"))
-                            {
-                                using (var virtualWOW6432CLSIDKey = virtualClassesEntry.CreateSubKey("WOW6432Node"))
-                                { }
+                                virtualClassesEntry.CreateSubKey("WOW6432Node");
+                                
+                            
+                            using var virtualWOW6432CLSIDKey = virtualClassesEntry.OpenSubKey("WOW6432Node");
+                            using var virtualInterface = virtualWOW6432CLSIDKey.CreateSubKey("Interface");
+                            
+                            var localInterfaceKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
 
-                            }
-                            using (var virtualWOW6432CLSIDKey = virtualClassesEntry.OpenSubKey("WOW6432Node"))
-                            using (var virtualInterface = virtualWOW6432CLSIDKey.CreateSubKey("Interface"))
+                            if (localInterfaceKey != null)
                             {
-                                var localInterfaceKey = Registry.ClassesRoot.OpenSubKey($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
+                                //save at:
+                                //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                Console.WriteLine($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
 
-                                if (localInterfaceKey != null)
+                                using var virtualCLSIDEntrySubKey = virtualInterface.CreateSubKey(typeId.ToString("B").ToUpper());
+                                
+                                ExportKey(localInterfaceKey, virtualCLSIDEntrySubKey);
+
+
+                                //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
+                                using var virtualInterfaceRoot = virtualClassesEntry.CreateSubKey("Interface");
+                                
+                                var localInterfaceRootKey = Registry.ClassesRoot.OpenSubKey($"Interface\\{typeId.ToString("B").ToUpper()}");
+
+                                if (localInterfaceRootKey != null)
                                 {
                                     //save at:
-                                    //REGISTRY\MACHINE\SOFTWARE\Classes\WOW6432Node\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    Console.WriteLine($"WOW6432Node\\Interface\\{typeId.ToString("B").ToUpper()}");
-
-                                    using (var virtualCLSIDEntrySubKey = virtualInterface.CreateSubKey(typeId.ToString("B").ToUpper()))
-                                    {
-                                        ExportKey(localInterfaceKey, virtualCLSIDEntrySubKey);
-                                    }
-
                                     //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                    using (var virtualInterfaceRoot = virtualClassesEntry.CreateSubKey("Interface"))
-                                    {
-                                        var localInterfaceRootKey = Registry.ClassesRoot.OpenSubKey($"Interface\\{typeId.ToString("B").ToUpper()}");
+                                    Console.WriteLine($"Classes\\Interface\\{typeId.ToString("B").ToUpper()}");
+                                    using var virtualInterfaceRootEntrySubKey = virtualInterfaceRoot.CreateSubKey(typeId.ToString("B").ToUpper());
+                                    
+                                    ExportKey(localInterfaceRootKey, virtualInterfaceRootEntrySubKey);
+                                    
 
-                                        if (localInterfaceRootKey != null)
-                                        {
-                                            //save at:
-                                            //REGISTRY\MACHINE\SOFTWARE\Classes\Interface\{E29387D7-20AD-4F47-B17F-AEEB2B1D1D2F}
-                                            Console.WriteLine($"Classes\\Interface\\{typeId.ToString("B").ToUpper()}");
-                                            using (var virtualInterfaceRootEntrySubKey = virtualInterfaceRoot.CreateSubKey(typeId.ToString("B").ToUpper()))
-                                            {
-                                                ExportKey(localInterfaceRootKey, virtualInterfaceRootEntrySubKey);
-                                            }
-
-                                        }
-                                    }
                                 }
+                                
                             }
+                            
                         }
 
 
@@ -345,20 +343,20 @@ namespace Vb6VirtualRegistry
         private static string ReplaceKeyEntryValues(string pValue)
         {
 
-            List<String> directoryValues = new List<string>(){  "AppVPackageDrive",
-                                                                "Common Desktop",
-                                                                "Common Programs",
-                                                                "Local AppData",
-                                                                "LocalAppDataLow",
-                                                                "ProgramFilesX86",
-                                                                "ProgramFilesX64",
-                                                                "System",
-                                                                "SystemX86",
-                                                                "SystemX64",
-                                                                "SYSTEM~1",
-                                                                "SYSTEM~2",
-                                                                "Windows"
-                                                             };
+            List<String> directoryValues = new (){  "AppVPackageDrive",
+                                                    "Common Desktop",
+                                                    "Common Programs",
+                                                    "Local AppData",
+                                                    "LocalAppDataLow",
+                                                    "ProgramFilesX86",
+                                                    "ProgramFilesX64",
+                                                    "System",
+                                                    "SystemX86",
+                                                    "SystemX64",
+                                                    "SYSTEM~1",
+                                                    "SYSTEM~2",
+                                                    "Windows"
+                                                    };
 
             var resultList = directoryValues.FindLast(s => pValue.IndexOf(s) > 0);
 
@@ -395,7 +393,7 @@ namespace Vb6VirtualRegistry
 
         private static void ExportKey(RegistryKey localKey, OffregKey virtualKey)
         {
-
+            
             foreach (var valueName in localKey.GetValueNames())
             {
                 var vn = localKey.GetValue(valueName);
@@ -416,22 +414,21 @@ namespace Vb6VirtualRegistry
 
                 if (sk != null)
                 {
-                    using (var newSubKey = virtualKey.CreateSubKey(subkey))
+                    using var newSubKey = virtualKey.CreateSubKey(subkey);
+
+                    foreach (var valueName in sk.GetValueNames())
                     {
+                        var vn = sk.GetValue(valueName);
 
-                        foreach (var valueName in sk.GetValueNames())
+                        if (vn != null)
                         {
-                            var vn = sk.GetValue(valueName);
-
-                            if (vn != null)
-                            {
-                                newSubKey.SetValue(valueName, ReplaceKeyEntryValues(vn.ToString()));
-                            }
-
+                            newSubKey.SetValue(valueName, ReplaceKeyEntryValues(vn.ToString()));
                         }
 
-                        ExportKey(sk, newSubKey);
                     }
+
+                    ExportKey(sk, newSubKey);
+                    
 
                 }
 
