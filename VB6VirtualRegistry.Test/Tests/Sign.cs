@@ -13,7 +13,7 @@ namespace VB6VirtualRegistry.Test.Tests
     
     public class Sign
     {
-        [Fact]
+        
         public void FullPath()
         {
             string signDir = "C:\\MSIX\\SignTest";
@@ -71,7 +71,7 @@ namespace VB6VirtualRegistry.Test.Tests
 
         }
 
-        [Fact]
+       
         public void RelativePath()
         {
             string msixApp = "unsignedmyvb6app.msix";
