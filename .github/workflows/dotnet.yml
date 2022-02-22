@@ -26,7 +26,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build Vb6VirtualRegistry --configuration Release --no-restore
     
       - name: Test
         run: dotnet test Vb6VirtualRegistry.Test
