@@ -35,15 +35,15 @@ jobs:
           path: TestResults
             
       - name: Publish
-        run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x86 -p:PublishSingleFile=true --self-contained true --output ./artifacts
+        run: dotnet publish Vb6VirtualRegistry --configuration Release --framework net6.0-windows --runtime win-x64 -p:PublishSingleFile=true --self-contained true --output ./artifacts
 
-      - name: Upload X86 Artifact
+      - name: Upload X64 Artifact
         uses: actions/upload-artifact@v2
         with:
-         name: Vb6VirtualRegistry32
+         name: Vb6VirtualRegistry64
          path: ./artifacts/Vb6VirtualRegistry.exe
    
-      - name: Create release archive X86
+      - name: Create release archive X64
         run: Compress-Archive -Path ./artifacts/* -DestinationPath ./artifacts/Vb6VirtualRegistry.zip 
        
       - name: Create GitHub Release
@@ -55,7 +55,7 @@ jobs:
           tag_name: v${{github.run_number}}
           release_name: Release V${{github.run_number}}
     
-      - name: Upload Release Asset x86
+      - name: Upload Release Asset x64
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
