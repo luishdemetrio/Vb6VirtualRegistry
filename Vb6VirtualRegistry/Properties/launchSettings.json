@@ -2,7 +2,7 @@
   "profiles": {
     "Vb6VirtualRegistry": {
       "commandName": "Project",
-      "commandLineArgs": "pack C:\\msix\\harry\\ C:\\msix\\harry\\registry.dat --append"
+      "commandLineArgs": "unpack C:\\msix\\avd\\msix\\FlightTracker_1.0.1.0_x64__kz5d2ck10dqg4.msix C:\\msix\\avd\\msix\\f_files"
     }
   }
 }

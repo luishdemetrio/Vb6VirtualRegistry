@@ -7,13 +7,15 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="offreg.x64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="offreg.x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="offreg.x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
