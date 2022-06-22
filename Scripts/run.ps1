@@ -6,7 +6,7 @@
 # it creates a self-signed certificate for CN=VB6VirtualRegistry 
 # and it installs the certificate on Local Machine \ Trusted People
 # notice that the name must be the same defined on the app manifest Publisher="CN=Vb6VirtualRegistry" 
-CreateCertificate "Vb6VirtualRegistry" "C:\github\Vb6VirtualRegistry\Sample"
+CreateCertificate "MeuCertificado" "C:\msix"
 
 # Unpack-MSIX "C:\github\Vb6VirtualRegistry\Scripts\Sample\sample.msix" C:\github\Vb6VirtualRegistry\Scripts\Sample\msix
 

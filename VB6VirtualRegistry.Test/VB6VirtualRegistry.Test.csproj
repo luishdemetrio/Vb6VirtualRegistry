@@ -5,7 +5,8 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

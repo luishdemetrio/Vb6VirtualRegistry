@@ -1,4 +1,5 @@
-$global:windowsSDKPath = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x86" 
+$global:windowsSDKPath = "C:\github\Vb6VirtualRegistry\Vb6VirtualRegistry\SDK"
+ 
 $global:certificatePassword = "AppConsult@PleaseChangeit!"
 
 function CreateCertificate($certificateName, $certificatePath)
